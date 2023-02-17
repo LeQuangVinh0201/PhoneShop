@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Register Page</title>
+	<!--Bootsrap 4 CDN-->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    
+    <!--Fontawesome CDN-->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+	<!--Custom styles-->
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<link rel="stylesheet" href="/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="/CustomeCss/NewOrEdit.css">
+	<script src="/bootstrap.js"></script>
+</head>
+<body>
+<div class="container">
+	<div class="d-flex justify-content-center h-100">
+		<h1>New Or Edit Phone</h1>
+	</div>	
+	<hr />
+	<br></br>
+	<form th:action="@{/admin/manage/products/newOrEdit}" method="post" th:object="${telephone}" enctype="multipart/form-data">
+	  <div class="form-group row">
+	    <label for="masp" class="col-2 col-form-label">Product ID:</label>
+	    <div class="col-3">
+	      <input th:if="${telephone.masp != null}" readonly type="text" th:field="*{masp}" class="form-control" />
+	      <input th:if="${telephone.masp == null}"  type="text" th:field="*{masp}" class="form-control" />
+	      <input type="hidden" th:field="*{createdAt}" class="form-control"/>
+	      <input type="hidden" th:field="*{createdBy}" class="form-control"/>
+		  <p style="color:red;" th:if="${#fields.hasErrors('masp')}" th:errors="*{masp}" th:class="error" ></p>
+	    </div>
+	  </div>
+	  <div class="form-group row">
+	    <label for="name" class="col-2 col-form-label">Name :</label>
+	    <div class="col-3">
+	      <input type="text" class="form-control" th:field="*{name}"/>
+		  <p style="color:red;" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:class="error" ></p>
+	    </div>
+	  </div>
+	  <div class="form-group row">
+	    <label for="pictureUrl" class="col-2 col-form-label">Picture Url :</label>
+	    <div class="col-3">
+	      <input type="file" class="form-control"  name="pictureUrl"/>
+		  <p style="color:red;" th:if="${#fields.hasErrors('pictureUrl')}" th:errors="*{pictureUrl}" th:class="error" ></p>
+	    </div>
+	  </div>
+	  <div class="form-group row">
+	    <label for="series" class="col-2 col-form-label">Series :</label>
+	    <div class="col-3">
+	      <input type="text" class="form-control"  th:field="*{series}" />
+		  <p style="color:red;" th:if="${#fields.hasErrors('series')}" th:errors="*{series}" th:class="error" ></p>
+	    </div>
+	  </div>
+	  <div class="form-group row">
+	    <label for="information" class="col-2 col-form-label">Information :</label>
+	    <div class="col-3">
+	      <input type="text" class="form-control"  name="information" th:field="*{detail.information}"/>
+	      <input type="hidden" class="form-control"  name="id" th:field="*{detail.id}"/>
+	    </div>
+	  </div>
+	  <div class="form-group row">
+	    <label for="brand" class="col-2 col-form-label">Brand :</label>
+	    <div class="col-3">
+	      <input type="text" class="form-control"  name="brand" th:field="*{brand.brand}"/>
+	      <input type="hidden" class="form-control"  name="id" th:field="*{brand.id}"/>
+	    </div>
+	  </div>
+	  
+	  
+	  <div class="form-row" style="margin-left:183px" th:each="item, itemStat : *{editions}">
+		  <div class="form-group col-2">
+		      <label for="capacity">Capacity (GB)</label>
+		      <input type="text" readonly class="form-control" th:field="*{editions[__${itemStat.index}__].capacity}"   name="capacity">
+		      <input type="hidden" class="form-control" th:field="*{editions[__${itemStat.index}__].id}"   name="id" >
+		    </div>
+		    <div class="form-group col-2">
+		      <label for="price">Price</label>
+		      <input type="text" class="form-control" th:field="*{editions[__${itemStat.index}__].price}" name="price">
+		    </div>
+		    <div class="form-group col-2">
+		      <label for="discount">Discount</label>
+		      <input type="text" class="form-control" th:field="*{editions[__${itemStat.index}__].discount}" name="discount" >
+		    </div>
+<!-- 		    <div class="form-group col-2"> -->
+<!-- 		      <label for="storage">Storage</label> -->
+<!-- 		      <input type="text" class="form-control" th:field="*{editions[__${itemStat.index}__].storage}" name="storage" > -->
+<!-- 		    </div> -->
+<!-- 		    <div class="form-group col-2"> -->
+<!-- 		      <label for="storage">Saled</label> -->
+<!-- 		      <input type="text" class="form-control" th:field="*{editions[__${itemStat.index}__].saled}" name="saled" > -->
+<!-- 		    </div> -->
+	  </div>
+	  
+
+      <div>
+    	<input class="btn btn-warning" style="margin-left:183px" type="submit" value="Save"/>
+      </div>
+	</form>
+	
+
+
+</div>
+</body>
+</html>

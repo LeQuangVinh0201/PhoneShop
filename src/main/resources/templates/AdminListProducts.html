@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/CustomeCss/NewOrEdit.css">
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 60%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+</style>
+<base href="/Telephone/" /> 
+</head>
+<body>
+	<h1>List Of Telephones</h1>
+	<hr />
+	<a style="color:blue;" th:href="@{/admin/manage/products/newOredit}">New Telephone</a>
+	<hr />
+	<div th:if="${message != null}">
+		<h3 th:text="${message}"></h3>
+	</div>
+	<table>
+		<tr>
+			<td>Product Code</td>
+			<td>Name</td>
+			<td>Brand</td>
+			<td>Series</td>
+			<td>Photo</td>
+			<td>Action</td>
+		</tr>
+		<tr th:each="item : ${telephones}">
+			<td th:text="${item.masp}"></td>
+			<td th:text="${item.name}"></td>
+			<td th:text="${item.brand.brand}"></td>
+			<td th:text="${item.series}"></td>
+			<td><img th:src="@{${item.photoUrlPath}}" width="120" height="150"/></td>
+			<td>
+				<a style="color:blue;" th:href="@{'/admin/manage/products/newOredit/' + ${item.masp}}">Edit</a>
+				<a style="color:blue;" th:href="@{'/admin/manage/products/delete/' + ${item.masp}}">Delete</a>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

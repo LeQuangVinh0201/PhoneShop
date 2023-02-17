@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<link rel="stylesheet" href="/bootstrap.css">
+<script src="/bootstrap.js"></script>
+<link rel="stylesheet" type="text/css" href="/CustomeCss/MainPage.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Insert title here</title>
+</head>
+<body>
+<div style="background-color: #f4f4f4;">
+  <div id="header" class="container-fluid text-white">
+    <div class="row" style="padding: 0;">
+        <div class="col-2" style="padding:5px">
+          <img src="/LogoImage/logo.png"  width="100" height="70" >
+        </div>
+        <div class="col-7 d-flex justify-content-center">
+          <input type="text" placeholder="Please enter product's name to search" style="width: 70%; height: 50%;margin-top: 20px; border-radius: 10px;">
+          <button type="button" class="btn btn-danger" style="width:50px ; height: 50%;margin-top: 20px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+        </div>
+        <div class="col-3 d-flex justify-content-center">
+          <div class="row container ">
+            <div class="col-5 text-center"  id="cart">
+              <i class="fa fa-shopping-cart pt-3" aria-hidden="true"></i><br>
+              <span>Your Cart</span>
+            </div>
+            <div class="col-7 text-center"  id="personAccount">
+              <i class="fa fa-user pt-3" aria-hidden="true"></i><br>
+              <span>Login</span>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  
+  <div class="container-fluid mt-4 d-flex justify-content-center">
+    <nav class="navbar navbar-expand-lg navbar-dark " style="background-color: #00483d; border-radius: 10px; width: 80%;">
+      <div class="container-fluid  d-flex justify-content-around" >
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown" style="padding-left: 50px;"> 
+            <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">Apple </a> 
+            <ul class="dropdown-menu fade-up">
+                <li><a class="dropdown-item" href="#"> iPhone 14 Series</a></li>
+                <li><a class="dropdown-item" href="#"> iPhone 13 Series </a></li>
+                <li><a class="dropdown-item" href="#"> iPhone 12 Series </a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown" style="padding-left: 50px;">
+            <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">  Samsung  </a>
+              <ul class="dropdown-menu fade-up">
+                  <li><a class="dropdown-item" href="#"> Galaxy Z Series</a></li>
+                  <li><a class="dropdown-item" href="#"> Galaxy S Series </a></li>
+                  <li><a class="dropdown-item" href="#"> Galaxy A Series </a></li>
+              </ul>
+          </li>
+          <li class="nav-item dropdown" style="padding-left: 50px;">
+            <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">  Xioami  </a>
+              <ul class="dropdown-menu fade-up">
+                <li><a class="dropdown-item" href="#"> Xiaomi Redmi</a></li>
+                <li><a class="dropdown-item" href="#"> Xiaomi Redmi Note </a></li>
+              </ul>
+          </li>
+          <li class="nav-item dropdown" style="padding-left: 50px;">
+            <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">  Oppo  </a>
+              <ul class="dropdown-menu fade-up">
+                <li><a class="dropdown-item" href="#"> OPPO Find X Series</a></li>
+                <li><a class="dropdown-item" href="#"> OPPO Reno Series </a></li>
+                <li><a class="dropdown-item" href="#"> OPPO A Series </a></li>
+              </ul>
+          </li>
+          <li class="nav-item dropdown" style="padding-left: 50px;">
+            <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">  Vivo  </a>
+              <ul class="dropdown-menu fade-up">
+                <li><a class="dropdown-item" href="#"> Vivo V Series</a></li>
+                <li><a class="dropdown-item" href="#"> Vivo T Series </a></li>
+                <li><a class="dropdown-item" href="#"> Vivo Y Series </a></li>
+              </ul>
+          </li>
+          <li class="nav-item dropdown" style="padding-left: 50px;">
+            <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">  Nokia  </a>
+              <ul class="dropdown-menu fade-up">
+                <li><a class="dropdown-item" href="#"> Nokia</a></li>
+                <li><a class="dropdown-item" href="#"> Nokia Plus </a></li>
+              </ul>
+          </li>
+          <li class="nav-item dropdown" style="padding-left: 50px;">
+            <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">  Realme  </a>
+              <ul class="dropdown-menu fade-up">
+                <li><a class="dropdown-item" href="#"> Realme C</a></li>
+                <li><a class="dropdown-item" href="#"> Realme Cs </a></li>
+              </ul>
+          </li>
+        </ul>
+      </div> 
+     </nav>
+  </div>
+
+  <div class="container-fluid mt-3 d-flex justify-content-center ">
+    <img src="/LogoImage/iphone14.png"  width="1200" height="600"  id="iphone14">
+  </div>
+
+  <!-- Flash Sale -->
+  <div class="mt-3" style="padding-left: 75px;">  
+    <div class="badge text-wrap" style="background-color: #cb1c22; width: 300px; height: 50px;font-size: 20px; padding-top: 15px;">Điện thoại bán chạy nhất</div>
+  </div>
+
+  <div class="mt-3  d-flex justify-content-center ">
+      <div class="row container-fluid" style="width: 1250px;">
+        <div class="col-3 bg-danger">
+          <div class=" d-flex justify-content-center">
+            <img src="iphone14promax.png" width="250" height="250" style="border-radius: 10px; margin-top: 15px;">
+          </div>
+          <div>
+            <span style="padding-left: 11px;font-weight:bold; font-size: 18px;">Iphone 14 Pro Max 128GB</span>
+          </div>
+          <div id="ip14promax" class="row d-flex justify-content-center bg-success" style="width: 250px; margin-left: 11px;">
+              <button class="col-4 btn btn-dark" type="button"  style="padding: 0px;"> 128GB </button>  
+              <button class="col-4 btn btn-secondary" type="button"  style="padding: 0px;"> 256GB </button>  
+              <button class="col-4 btn btn-secondary" type="button"  style="padding: 0px;"> 512GB </button>  
+          </div>
+
+          <div class="mt-4">
+            thong tin detail
+          </div>
+
+        </div>
+
+
+        <div class="col-3 bg-success"></div>
+        <div class="col-3 bg-warning"></div>
+        <div class="col-3 bg-success"></div>
+        
+        
+      </div>
+  </div>
+
+</div>
+
+
+<script>
+  $(document).ready(function () {
+    $('#iphone14, #cart').click(function(){
+      alert("hello");
+    });
+    
+    $('#personAccount').click(function(){
+    	window.location.href = "/alogin";
+    });
+    
+    $('#ip14promax button[type=button]').click(function(e){
+      console.log(e.target);
+      var thisElement = $(this);
+      $(this).removeClass("btn-secondary");
+      $(this).addClass("btn-dark");
+
+      $(this).siblings().each(function(e){
+        if($(this).hasClass("btn-dark")){
+            $(this).removeClass("btn-dark");
+            $(this).addClass("btn-secondary");
+        }
+      })
+    });
+
+    
+  })
+
+
+</script>
+</body>
+</html>

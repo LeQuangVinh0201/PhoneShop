@@ -1,0 +1,9 @@
+@charset "ISO-8859-1";
+#header{
+    background-color: #00483d;
+    height: 80px;
+}
+
+#iphone14, #cart, #personAccount {
+     cursor: pointer; 
+}

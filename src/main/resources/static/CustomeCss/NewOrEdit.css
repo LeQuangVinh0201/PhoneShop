@@ -1,0 +1,10 @@
+@charset "ISO-8859-1";
+
+html,body{
+	background-image: url('/LogoImage/insert-background.jpg');
+	background-size: cover;
+	background-repeat: repeat;
+	height: 100%;
+	font-family: 'Numans', sans-serif;
+	color:white
+} 
