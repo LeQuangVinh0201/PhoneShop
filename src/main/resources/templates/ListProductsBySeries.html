@@ -10,6 +10,11 @@
 <link rel="stylesheet" type="text/css" href="/CustomeCss/MainPage.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>Insert title here</title>
+<style>
+html,body {
+  scroll-behavior: smooth;
+}
+</style>
 </head>
 <body>
 <div style="background-color: #f4f4f4;">
@@ -44,7 +49,7 @@
           <li class="nav-item dropdown" style="padding-left: 50px;"> 
             <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">Apple </a> 
             <ul class="dropdown-menu fade-up">
-                <li><a class="dropdown-item" href="user/searchBySeries/iphone14"> iPhone 14 Series</a></li>
+                <li><a class="dropdown-item" href="#" > iPhone 14 Series</a></li>
                 <li><a class="dropdown-item" href="#"> iPhone 13 Series </a></li>
                 <li><a class="dropdown-item" href="#"> iPhone 12 Series </a></li>
             </ul>
@@ -99,43 +104,40 @@
      </nav>
   </div>
 
-  <div class="container-fluid mt-3 d-flex justify-content-center ">
-    <img src="/LogoImage/iphone14.png"  width="1200" height="600"  id="iphone14">
-  </div>
-
-  <!-- Flash Sale -->
-  <div class="mt-3" style="padding-left: 75px;">  
-    <div class="badge text-wrap" style="background-color: #cb1c22; width: 300px; height: 50px;font-size: 20px; padding-top: 15px;">Sản phẩm bán chạy nhất</div>
-  </div>
-
-  <div class="mt-3  d-flex justify-content-center ">
-      <div class="row container-fluid" style="width: 1250px;">
-        <div class="col-3 bg-danger">
+  <!-- display phones -->
+  <div class="mt-3 d-flex justify-content-center " th:each="item : ${telephones}">
+      <div class="row container-fluid d-flex justify-content-around" style="width: 1150px;" id="phoneWrap">
+        <div class="col-3 mt-3 phoneItem" style="background-color:#c8d0cf;overflow-y: visible ;" th:each="edi : ${item.editions}" >
           <div class=" d-flex justify-content-center">
-            <img src="iphone14promax.png" width="250" height="250" style="border-radius: 10px; margin-top: 15px;">
+            <img id="phonePicture" th:src="@{${'/uploads/' + item.pictureUrl}}" width="250" height="250" style="border-radius: 10px; margin-top: 15px;">
           </div>
-          <div>
-            <span style="padding-left: 11px;font-weight:bold; font-size: 18px;">Iphone 14 Pro Max 128GB</span>
+          <div class="row d-flex justify-content-center ">
+            <span class="col-12 text-center"  style="font-weight:bold; font-size: 18px;">[[*{item.name}]]  [[*{edi.capacity}]]GB</span>
           </div>
-          <div id="ip14promax" class="row d-flex justify-content-center bg-success" style="width: 250px; margin-left: 11px;">
-              <button class="col-4 btn btn-dark" type="button"  style="padding: 0px;"> 128GB </button>  
-              <button class="col-4 btn btn-secondary" type="button"  style="padding: 0px;"> 256GB </button>  
-              <button class="col-4 btn btn-secondary" type="button"  style="padding: 0px;"> 512GB </button>  
+          <div id="" class="row d-flex justify-content-center" style="width: 250px; margin-left: 11px;">
+              <span class="col-12 text-center"   style="font-weight:bold; font-size: 14px; color:#cb1c22"> <del> [[*{edi.price}]] VND </del></span>  
           </div>
-
-          <div class="mt-4">
-            thong tin detail
+          <div id="" class="row d-flex justify-content-center" style="width: 250px; margin-left: 11px;">
+              <span class="col-12 text-center"   style="font-weight:bold; font-size: 22px; color:#cb1c22">[[*{edi.price -edi.discount}]] VND</span>  
+          </div>
+          <div id="ip14promax" class="row d-flex justify-content-left mt-2 mb-1" style="width: 250px; height: 35px ; margin-left: 0px;">
+              <button class="col-4 btn btn-danger" type="button"  style="padding: 0px;width: 120px;"> MUA NGAY </button>  
           </div>
 
         </div>
-
-
-        <div class="col-3 bg-success"></div>
-        <div class="col-3 bg-warning"></div>
-        <div class="col-3 bg-success"></div>
+        </div>
+	      <div class="heightCut" style="height:5px">
+	  	</div>
         
         
+<!--         <div class="col-3 bg-success"></div> -->
+<!--         <div class="col-3 bg-warning"></div> -->
+<!--         <div class="col-3 bg-success"></div> -->
       </div>
+      
+      
+  </div>
+  <div style="height:50px">
   </div>
 
 </div>
@@ -143,27 +145,34 @@
 
 <script>
   $(document).ready(function () {
-    $('#iphone14, #cart').click(function(){
-      alert("hello");
-    });
     
-//     $('#personAccount').click(function(){
-//     	window.location.href = "/alogin";
+//     $('#phoneItem').click(function(){
+//     	$('#phonePicture').css();
 //     });
     
-    $('#ip14promax button[type=button]').click(function(e){
-      console.log(e.target);
-      var thisElement = $(this);
-      $(this).removeClass("btn-secondary");
-      $(this).addClass("btn-dark");
-
-      $(this).siblings().each(function(e){
-        if($(this).hasClass("btn-dark")){
-            $(this).removeClass("btn-dark");
-            $(this).addClass("btn-secondary");
-        }
-      })
+    $('.phoneItem').hover(function(){
+    		$(this).find('img').css("transform", "scale(1.04, 1.04)").css('transition-delay', '0.02s') ;
+    	   $(this).css("border","1px solid #cb1c22");
+   			$(this).find('.heightCut').css("height", "4px") ;
+    	}, function(){
+    		$(this).find('img').css("transform", "none");
+    		$(this).css("border","none");
+//     		$(this).find('.heightCut').css("height", "5px") ;
     });
+    
+//     $('#ip14promax button[type=button]').click(function(e){
+//       console.log(e.target);
+//       var thisElement = $(this);
+//       $(this).removeClass("btn-secondary");
+//       $(this).addClass("btn-dark");
+
+//       $(this).siblings().each(function(e){
+//         if($(this).hasClass("btn-dark")){
+//             $(this).removeClass("btn-dark");
+//             $(this).addClass("btn-secondary");
+//         }
+//       })
+//     });
 
     
   })

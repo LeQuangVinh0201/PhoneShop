@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.stereotype.Repository;
 
@@ -79,5 +80,9 @@ public interface TelephoneRepository extends JpaRepository<Telephone, String>{
 	<S extends Telephone> List<S> saveAll(Iterable<S> entities);
 
 	<S extends Telephone> S save(S entity);
-
+	
+	List<Telephone> findBySeries(String series);
+	
+//	@Query("select t from telephones t")
+//	List<Telephone> findByBestSell();
 }

@@ -21,6 +21,8 @@ public class TelephoneService implements TelephoneRepository{
 	@Autowired
 	TelephoneRepository telephoneRepository;
 	
+	
+	
 	@Override
 	public <S extends Telephone> S save(S entity) {
 		return telephoneRepository.save(entity);
@@ -175,6 +177,16 @@ public class TelephoneService implements TelephoneRepository{
 	public void deleteAll() {
 		telephoneRepository.deleteAll();
 	}
+
+	@Override
+	public List<Telephone> findBySeries(String series) {
+		return telephoneRepository.findBySeries(series);
+	}
+
+//	@Override
+//	public List<Telephone> findByBestSell() {
+//		return null;
+//	}
 	
 	
 }
