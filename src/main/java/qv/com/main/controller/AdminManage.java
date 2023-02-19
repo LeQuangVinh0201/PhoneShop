@@ -1,10 +1,12 @@
 package qv.com.main.controller;
 
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -59,7 +61,20 @@ public class AdminManage {
 		if(masp.isPresent()) {
 			Optional<Telephone> existedPhone = telephoneService.findById(masp.get());
 			
-			telephone = existedPhone.isPresent()? existedPhone.get() : new Telephone();
+			if(existedPhone.isPresent()) {
+				telephone = existedPhone.get();
+				
+//				for (int i = 0; i < telephone.getEditions().size(); i++) {
+//					Edition edi = telephone.getEditions().get(i);
+//					BigDecimal number = new BigDecimal(edi.getPrice());
+//					double myDouble = number.doubleValue();
+//					edi.setPrice(myDouble);
+//					
+//			    }
+			}else {
+				telephone = new Telephone();
+			}
+			
 		}else {//create new
 			telephone = new Telephone();
 			
@@ -86,7 +101,7 @@ public class AdminManage {
 	
 	@PostMapping("/manage/products/newOrEdit")
 	public String saveOrUpdate(ModelMap model,@Valid Telephone telephone,BindingResult result, HttpServletRequest request,
-			@RequestParam("pictureUrl") MultipartFile photo ) {
+			@RequestParam(name="pictureUrl", required = false) MultipartFile photo ) {
 //		if(result.hasErrors()) {
 //			model.addAttribute("account", new AdminLoginDto());
 //			return "LoginPage";
@@ -95,16 +110,18 @@ public class AdminManage {
 		Optional<Telephone> existOrNot = telephoneService.findById(telephone.getMasp());
 		
 		if( existOrNot.isPresent()) { //update
-			Path path = Paths.get("uploads/");
-			
-			try {
-				InputStream inputStream = photo.getInputStream();
-				Files.copy(inputStream, path.resolve(photo.getOriginalFilename()),
-						StandardCopyOption.REPLACE_EXISTING);
-				telephone.setPictureUrl(photo.getOriginalFilename().toLowerCase());
-			} catch (Exception e) {
-				// TODO: handle exception
-				e.printStackTrace();
+			if(telephone.getPictureUrl() == null) {
+				Path path = Paths.get("uploads/");
+				
+				try {
+					InputStream inputStream = photo.getInputStream();
+					Files.copy(inputStream, path.resolve(photo.getOriginalFilename()),
+							StandardCopyOption.REPLACE_EXISTING);
+					telephone.setPictureUrl(photo.getOriginalFilename().toLowerCase());
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				}
 			}
 			
 			for (int i = 0; i < telephone.getEditions().size(); i++) {

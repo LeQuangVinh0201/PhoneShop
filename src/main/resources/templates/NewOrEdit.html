@@ -12,7 +12,8 @@
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	<link rel="stylesheet" href="/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="/CustomeCss/NewOrEdit.css">
-	<script src="/bootstrap.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<script src="/bootstrap.js"></script>	
 </head>
 <body>
 <div class="container">
@@ -40,9 +41,11 @@
 	    </div>
 	  </div>
 	  <div class="form-group row">
-	    <label for="pictureUrl" class="col-2 col-form-label">Picture Url :</label>
-	    <div class="col-3">
-	      <input type="file" class="form-control"  name="pictureUrl"/>
+	    <label  for="pictureUrl" class="col-2 col-form-label">Picture Url :</label>
+	    <div class="col-3" id="picture">
+	      <input th:if="${telephone.masp == null}" type="file" class="form-control"  name="pictureUrl"/>
+	      <input th:if="${telephone.masp != null}" type="text" class="form-control" id="staticUrl"  name="pictureUrl" th:field="*{pictureUrl}" readonly/>
+	      <input style="width :20%" th:if="${telephone.masp != null}" type="button" class="form-control" id="editPicture" value="Edit" />
 		  <p style="color:red;" th:if="${#fields.hasErrors('pictureUrl')}" th:errors="*{pictureUrl}" th:class="error" ></p>
 	    </div>
 	  </div>
@@ -100,7 +103,17 @@
 	</form>
 	
 
-
 </div>
+
+<script>
+$( document ).ready(function() {
+    $("#editPicture").on('click', function(){
+    	$("#staticUrl").remove();
+    	$("#picture").prepend('<input type="file" class="form-control"  name="pictureUrl"/>');
+    	
+    });
+});
+</script>
+
 </body>
 </html>

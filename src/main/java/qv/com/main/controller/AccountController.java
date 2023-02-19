@@ -31,12 +31,6 @@ public class AccountController {
 		return "";
 	}
 	
-//	@GetMapping("saveOrUpdate")
-//	public String Register(Model model) {
-//		model.addAttribute("account", new User()); 
-//		return "RegisterPage";
-//	}
-	
 	@PostMapping("saveOrUpdate")
 	public ModelAndView saveOrUpdate(ModelMap model, @Valid @ModelAttribute("account") UserDto dto, BindingResult result) {
 		if(result.hasErrors()) {
