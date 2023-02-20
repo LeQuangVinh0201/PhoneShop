@@ -14,6 +14,9 @@
 html,body {
   scroll-behavior: smooth;
 }
+ul {
+  list-style-type: none;
+}
 </style>
 </head>
 <body>
@@ -105,35 +108,74 @@ html,body {
   </div>
 
   <!-- display phones -->
-  <div class="mt-3 d-flex justify-content-center " th:each="item : ${telephones}">
-      <div class="row container-fluid d-flex justify-content-around" style="width: 1150px;" id="phoneWrap">
-        <div class="col-3 mt-3 phoneItem" style="background-color:#c8d0cf;border:2px solid #c8d0cf;" th:each="edi : ${item.editions}" >
-          <div class=" d-flex justify-content-center">
-            <img id="phonePicture" th:src="@{${'/uploads/' + item.pictureUrl}}" th:attr="onclick=|phoneDetail('*{edi.id}')|"  width="250" height="250" style="border-radius: 10px; margin-top: 15px;">
+  <div class="mt-2 d-flex justify-content-center " th:object="${telephone}">
+      <div class="row container-fluid d-flex justify-content-around" style="width: 1200px;" id="phoneWrap" th:object="${edition}">
+		<!--left Side -->
+        <div class="col-6 mt-3 phoneItem" style="background-color:#c8d0cf;border:2px solid #c8d0cf;"  >
+          <div class="mt-3 d-flex justify-content-center">
+            <img id="phonePicture" th:src="@{${'/uploads/' + telephone.pictureUrl}}"  width="550" height="550" style="border-radius: 10px; margin-top: 15px;">
           </div>
-          <div class="row d-flex justify-content-center ">
-            <span class="col-12 text-center"  style="font-weight:bold; font-size: 18px;">[[*{item.name}]]  [[*{edi.capacity}]]GB</span>
-          </div>
-          <div id="" class="row d-flex justify-content-center" style="width: 250px; margin-left: 11px;">
-              <span class="col-12 text-center"   style="font-weight:bold; font-size: 14px; color:#cb1c22"> <del>  [[${#numbers.formatDecimal(edi.price, 0, 'COMMA', 0, 'POINT')}]] VND</del></span>  
-          </div>
-          <div id="" class="row d-flex justify-content-center" style="width: 250px; margin-left: 11px;">
-              <span class="col-12 text-center"   style="font-weight:bold; font-size: 22px; color:#cb1c22">[[${#numbers.formatDecimal(edi.price -edi.discount, 0, 'COMMA', 0, 'POINT')}]] VND</span>  
-          </div>
-          <div id="ip14promax" class="row d-flex justify-content-left mt-2 mb-1" style="width: 250px; height: 35px ; margin-left: 0px;">
-              <button class="col-4 btn btn-danger" type="button" th:attr="onclick=|phoneDetail('*{edi.id}')|" style="padding: 0px;width: 120px;"> BUY NOW </button>  
-              <button class="col-4 btn btn-secondary" type="button" th:attr="onclick=|phoneDetail('*{edi.id}')|" style="width: 120px;margin-left:5px"> DETAIL </button>  
-          </div>
-
         </div>
+        
+        <!--right Side -->
+        <div class="col-6 mt-3 phoneItem" style="background-color:#c8d0cf;border:2px solid #c8d0cf;" >
+           	<div  class="mt-1">
+        		<span class=" text-left"   style="font-weight:bold; font-size: 30px; color:#cb1c22;font-family: Roboto,sans-serif;">[[${#numbers.formatDecimal(edition.price -edition.discount, 0, 'COMMA', 0, 'POINT')}]] VND</span>
+        		<span class="pt-1"  style="font-weight:bold; font-size: 18px; color:grey;font-family: Roboto,sans-serif;"><del>   [[${#numbers.formatDecimal(edition.price, 0, 'COMMA', 0, 'POINT')}]] VND </del></span>
+        	</div>
+        	<div>
+        		<h3 style="color:#005b96">Thông tin chi tiết</h3>
+        	</div>
+        	<div class="row">
+        		<pre style="font-family: 'Numans', sans-serif;font-size: 18px;">[[*{telephone.detail.information}]] </pre>
+        	</div>
+        	<div class="row">
+        		<h3 style="color:#005b96">Khuyến Mãi</h3>
+        	</div>
+        	<div class="row">
+	        	<ul style="font-family: 'Numans', sans-serif;font-size: 18px;">
+				  <li>
+				  	<i class="fa fa-check-circle" style="color:#04aa6d" aria-hidden="true"></i>
+					<span> Giảm đến 20% khi trả thẳng 1 lần</span>				  	
+				  </li>
+				  <li>
+				  	<i class="fa fa-check-circle" style="color:#04aa6d" aria-hidden="true"></i>
+					<span> Thu cũ đổi mới trợ giá ngay 15% đến 3 triệu (SmartExchange)</span>
+				  </li>
+				  <li>
+				  	<i class="fa fa-check-circle" style="color:#04aa6d" aria-hidden="true"></i>
+					<span> Giảm ngay 20% khi mua sim MBF Siêu Data 1T giá chỉ 184.000đ</span>
+				  </li>
+				  <li>
+				  	<i class="fa fa-check-circle" style="color:#04aa6d" aria-hidden="true"></i>
+					<span> Đơn hàng mua Điện thoại/Máy tính bảng/Laptop được tặng 1 PMH 500.000đ</span>
+				  </li>
+				  <li>
+				  	<i class="fa fa-check-circle" style="color:#04aa6d" aria-hidden="true"></i>
+					<span> Giảm đến 20% gói bảo hành VIP 1 đổi 1 / Rơi vỡ khi mua kèm máy</span>
+				  </li>
+				</ul>
+        	</div>
+        	<div class="row mt-2 d-flex justify-content-center" >
+        		<button class="btn btn-danger" type="submit" >
+        			<div><strong>MUA NGAY</strong></div>
+        			<span>Giao hàng miễn phí hoặc nhận tại shop</span>
+        		</button>
+        	</div>
+        	<div class="mt-1 row">
+        		<button class="btn btn-primary" type="button" style="width:49.3%;">
+        			<div><strong>TRẢ GÓP 0%</strong></div>
+        			<span>Duyệt nhanh qua điện thoại</span>
+        		</button>
+        		<button class="btn btn-primary" type="button" style="width:49.3%;margin-left:8px;">
+        			<div><strong>TRẢ GÓP QUA THẺ</strong></div>
+        			<span>Visa, Master Card, JCB, AMEX</span>
+        		</button>
+        	</div>
+        	<div style="height:20px;">
+        	</div>
         </div>
-	      <div class="heightCut" style="height:5px">
-	  	</div>
         
-        
-<!--         <div class="col-3 bg-success"></div> -->
-<!--         <div class="col-3 bg-warning"></div> -->
-<!--         <div class="col-3 bg-success"></div> -->
       </div>
       
       
@@ -145,21 +187,21 @@ html,body {
 
 
 <script>
-  function phoneDetail(editionId){
-		window.location.href = "/user/phoneDetail/" +editionId;
-  }
+//   function phoneDetail(editionId){
+// 		window.location.href = "/user/phoneDetail/" +editionId;
+//   }
   
-  $(document).ready(function () {
+//   $(document).ready(function () {
     
-    $('.phoneItem').hover(function(){
-    		$(this).find('img').css("transform", "scale(1.04, 1.04)").css('transition-delay', '0.02s') ;
-    	   $(this).css("border","2px solid #cb1c22");
-   			$(this).find('.heightCut').css("height", "4px") ;
-    	}, function(){
-    		$(this).find('img').css("transform", "none");
-    		$(this).css("border","2px solid #c8d0cf");
+//     $('.phoneItem').hover(function(){
+//     		$(this).find('img').css("transform", "scale(1.04, 1.04)").css('transition-delay', '0.02s') ;
+//     	   $(this).css("border","2px solid #cb1c22");
+//    			$(this).find('.heightCut').css("height", "4px") ;
+//     	}, function(){
+//     		$(this).find('img').css("transform", "none");
+//     		$(this).css("border","2px solid #c8d0cf");
 //     		$(this).find('.heightCut').css("height", "5px") ;
-    });
+//     });
     
 //     $('#ip14promax button[type=button]').click(function(e){
 //       console.log(e.target);
@@ -176,7 +218,7 @@ html,body {
 //     });
 
     
-  })
+//   })
 
 
 </script>

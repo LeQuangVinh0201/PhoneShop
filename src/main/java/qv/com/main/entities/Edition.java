@@ -44,10 +44,10 @@ public class Edition {
 	private Integer capacity;
 	
 	@Column(nullable = false)
-	private Double price;
+	private Long price;
 	
 	@Column
-	private Float discount;
+	private Long discount;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy ="edition", cascade =CascadeType.ALL)
 	private List<Revenue> revenues;
