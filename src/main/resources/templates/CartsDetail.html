@@ -8,15 +8,21 @@
 <link rel="stylesheet" href="/bootstrap.css">
 <script src="/bootstrap.js"></script>
 <link rel="stylesheet" type="text/css" href="/CustomeCss/MainPage.css">
+<link rel="stylesheet" type="text/css" href="/CustomeCss/Cart.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>Insert title here</title>
+<style>
+html,body {
+  scroll-behavior: smooth;
+}
+</style>
 </head>
 <body>
 <div style="background-color: #f4f4f4;">
   <div id="header" class="container-fluid text-white">
     <div class="row" style="padding: 0;">
         <div class="col-2" style="padding:5px">
-          <img src="/LogoImage/logo.png"  width="100" height="70" style="cursor: pointer; ">
+          <img src="/LogoImage/logo.png" id="logoQV" width="100" height="70" >
         </div>
         <div class="col-7 d-flex justify-content-center">
           <input type="text" placeholder=" Please enter product's name to search" style="width: 70%; height: 50%;margin-top: 20px; border-radius: 10px;">
@@ -44,7 +50,7 @@
           <li class="nav-item dropdown" style="padding-left: 50px;"> 
             <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">Apple </a> 
             <ul class="dropdown-menu fade-up">
-                <li><a class="dropdown-item" href="user/searchBySeries/iphone14"> iPhone 14 Series</a></li>
+                <li><a class="dropdown-item" href="#" > iPhone 14 Series</a></li>
                 <li><a class="dropdown-item" href="#"> iPhone 13 Series </a></li>
                 <li><a class="dropdown-item" href="#"> iPhone 12 Series </a></li>
             </ul>
@@ -99,70 +105,77 @@
      </nav>
   </div>
 
-  <div class="container-fluid mt-3 d-flex justify-content-center ">
-    <img src="/LogoImage/iphone14.png"  width="1200" height="600"  id="iphone14">
-  </div>
-
-  <!-- Flash Sale -->
-  <div class="mt-3" style="padding-left: 75px;">  
-    <div class="badge text-wrap" style="background-color: #cb1c22; width: 300px; height: 50px;font-size: 20px; padding-top: 15px;">Sản phẩm bán chạy nhất</div>
-  </div>
-
-  <div class="mt-3  d-flex justify-content-center ">
-      <div class="row container-fluid" style="width: 1250px;">
-        <div class="col-3 bg-danger">
-          <div class=" d-flex justify-content-center">
-            <img src="iphone14promax.png" width="250" height="250" style="border-radius: 10px; margin-top: 15px;">
-          </div>
-          <div>
-            <span style="padding-left: 11px;font-weight:bold; font-size: 18px;">Iphone 14 Pro Max 128GB</span>
-          </div>
-          <div id="ip14promax" class="row d-flex justify-content-center bg-success" style="width: 250px; margin-left: 11px;">
-              <button class="col-4 btn btn-dark" type="button"  style="padding: 0px;"> 128GB </button>  
-              <button class="col-4 btn btn-secondary" type="button"  style="padding: 0px;"> 256GB </button>  
-              <button class="col-4 btn btn-secondary" type="button"  style="padding: 0px;"> 512GB </button>  
-          </div>
-
-          <div class="mt-4">
-            thong tin detail
-          </div>
-
+  <!-- display phones -->
+  <div class=" container-fluid mt-3 d-flex justify-content-center row" >
+  	<div class="col-7" id="wrapper">	
+  	  <div class="row p-2" >
+  	  	<h3> Co 1 san pham trong gio hang</h3>
+  	  </div>	
+      <div class="row p-2" th:each="order : ${productcarts.orders}" style="border-top: 2px solid #0090a0">
+        <div class="col-4">
+        	<div class="row">
+        	 	<img id="phonePicture" th:src="@{${'/uploads/' + order.edition.telephone.pictureUrl}}" width="150" height="220" >
+        	</div>	
+        	<div class="row text-center">
+        		<span style="font-size:20px;"><strong>[[*{order.edition.telephone.name}]]</strong></span>
+        	</div>	
         </div>
-
-
-        <div class="col-3 bg-success"></div>
-        <div class="col-3 bg-warning"></div>
-        <div class="col-3 bg-success"></div>
         
+        <div class="col-4">
+        	<div class="row d-flex justify-content-center" style="margin-top:80px;">
+				<button style="width:40px; height:40px;"><i class="fa fa-minus" aria-hidden="true"></i></button>	
+				<input class="text-center" style="width:40px; height:40px; border:1px solid black; font-size:18px; font-weight:bold;" value="1" readonly/>
+				<button style="width:40px; height:40px;"><i class="fa fa-plus" aria-hidden="true"></i></button>
+        	</div>	
+        	<div class="row mt-1 d-flex justify-content-center">
+        		<button style="width:40px; height:40px;"><i style="font-size:20px;" class="fa fa-trash-o" aria-hidden="true"></i> </button>
+        	</div>	
+        </div>
+        
+        <div class="col-4">
+           	<div class="row d-flex justify-content-center" style="margin-top:90px;">
+        		<span class="col-12 text-center"   style="font-weight:bold; font-size: 24px; color:#cb1c22">[[${#numbers.formatDecimal(order.edition.price -order.edition.discount, 0, 'COMMA', 0, 'POINT')}]] VND</span>
+        	</div>
+        	<div class="row d-flex justify-content-center" >
+				<span class="col-12 text-center"   style="font-weight:bold; font-size: 14px; color:grey"> <del>  [[${#numbers.formatDecimal(order.edition.price, 0, 'COMMA', 0, 'POINT')}]] VND</del></span>
+        	</div>	
+        </div>
+        
+            
+          
+
         
       </div>
+      
+	</div> 	
+  </div>
+      
+      
+  <div style="height:50px">
   </div>
 
 </div>
 
 
 <script>
+  function phoneDetail(editionId){
+		window.location.href = "/user/phoneDetail/" +editionId;
+  }
+  
   $(document).ready(function () {
-    $('#iphone14, #cart').click(function(){
-      alert("hello");
-    });
     
-//     $('#personAccount').click(function(){
-//     	window.location.href = "/alogin";
+//     $('.phoneItem').hover(function(){
+//     		$(this).find('img').css("transform", "scale(1.04, 1.04)").css('transition-delay', '0.02s') ;
+//     	   $(this).css("border","2px solid #cb1c22");
+//    			$(this).find('.heightCut').css("height", "4px") ;
+//     	}, function(){
+//     		$(this).find('img').css("transform", "none");
+//     		$(this).css("border","2px solid #c8d0cf");
+//     		$(this).find('.heightCut').css("height", "5px") ;
 //     });
     
-    $('#ip14promax button[type=button]').click(function(e){
-      console.log(e.target);
-      var thisElement = $(this);
-      $(this).removeClass("btn-secondary");
-      $(this).addClass("btn-dark");
-
-      $(this).siblings().each(function(e){
-        if($(this).hasClass("btn-dark")){
-            $(this).removeClass("btn-dark");
-            $(this).addClass("btn-secondary");
-        }
-      })
+    $('#logoQV').click(function(e){
+    	window.location.href = "/loginSuccess";
     });
 
     

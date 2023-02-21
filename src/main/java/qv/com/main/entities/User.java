@@ -36,6 +36,12 @@ public class User {
 	@Column(columnDefinition = "nvarchar(20)")
 	private String role;
 	
+	@Column(columnDefinition = "nvarchar(20)")
+	private String phoneNumber;
+	
+	@Column(columnDefinition = "nvarchar(200)")
+	private String email;
+	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     private ProductCart productcart;

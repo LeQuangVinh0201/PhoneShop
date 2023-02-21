@@ -1,7 +1,5 @@
 package qv.com.main.entities;
 
-import java.util.Date;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,35 +9,31 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="revenues")
+@Table(name="orders")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Revenue {
+public class Orders {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
 	@Column(nullable = false)
-	private Integer storage;
-	
-	@Column()
-	private Integer sold;
-	
-	@Temporal(TemporalType.DATE)
-	private Date selldate;
+	private Integer quantity;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade =CascadeType.ALL)
-	@JoinColumn(name = "editionId")
-	private Edition edition;
+	@JoinColumn(name = "cartId")
+	private ProductCart productcart;
 	
-	
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "edition_id", referencedColumnName = "id")
+    private Edition edition;
+
 }

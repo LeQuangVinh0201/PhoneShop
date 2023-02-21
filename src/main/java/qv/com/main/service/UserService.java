@@ -45,6 +45,10 @@ public class UserService implements UserRepository{
 		
 		return userRepository.save(entity);
 	}
+	
+	public <S extends User> S saveNoUpdatePass(S entity) {
+		return userRepository.save(entity);
+	}
 
 	@Override
 	public <S extends User> List<S> saveAll(Iterable<S> entities) {

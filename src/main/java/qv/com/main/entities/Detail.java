@@ -25,7 +25,7 @@ public class Detail {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(columnDefinition = "nvarchar(250) not null")
+	@Column(columnDefinition = "nvarchar(500) not null")
 	@NotEmpty(message = "information must be entered")
 	@Length(max = 250, min =1 , message = "Length is between 1 and 250")
 	private String information;

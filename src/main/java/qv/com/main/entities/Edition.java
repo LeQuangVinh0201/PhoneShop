@@ -40,6 +40,9 @@ public class Edition {
 	@JoinColumn(name = "maspId")
 	private Telephone telephone;
 	
+	@OneToOne(mappedBy = "edition",cascade = CascadeType.ALL)
+    private Orders orders;
+	
 	@Column(nullable = false)
 	private Integer capacity;
 	
@@ -49,8 +52,6 @@ public class Edition {
 	@Column
 	private Long discount;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy ="edition", cascade =CascadeType.ALL)
-	private List<Revenue> revenues;
 	
 	
 //	@OneToOne(mappedBy = "edition",cascade = CascadeType.ALL)
