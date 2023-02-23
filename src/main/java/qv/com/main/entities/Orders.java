@@ -28,11 +28,13 @@ public class Orders {
 	@Column(nullable = false)
 	private Integer quantity;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade =CascadeType.ALL)
+//	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST) // no moi xoa dc thang child
+	@ManyToOne(fetch = FetchType.LAZY) 
 	@JoinColumn(name = "cartId")
 	private ProductCart productcart;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "edition_id", referencedColumnName = "id")
     private Edition edition;
 

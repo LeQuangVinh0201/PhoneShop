@@ -32,12 +32,13 @@ ul {
         </div>
         <div class="col-3 d-flex justify-content-center">
           <div class="row container ">
-            <div class="col-5 text-center"  id="cart">
-              <i class="fa fa-shopping-cart pt-3" aria-hidden="true"></i><br>
+            <div class="col-5 text-center"  id="cart" style="position: relative;">
+              <i class="fa fa-shopping-cart pt-3" aria-hidden="true" style="font-size: 20px;"></i><br>
               <span>Your Cart</span>
+              <span class="fs-cartic countTotalCart" th:if="${orderNumber != null}">[[${orderNumber}]] </span>
             </div>
             <div class="col-7 text-center"  id="personAccount">
-              <i class="fa fa-user pt-3" aria-hidden="true"></i><br>
+              <i class="fa fa-user pt-3" aria-hidden="true" style="font-size: 20px;"></i><br>
               <span th:if="${username != null}" >Welcome [[${username}]] !</span>
             </div>
           </div>
@@ -52,7 +53,7 @@ ul {
           <li class="nav-item dropdown" style="padding-left: 50px;"> 
             <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">Apple </a> 
             <ul class="dropdown-menu fade-up">
-                <li><a class="dropdown-item" href="#" > iPhone 14 Series</a></li>
+                <li><a class="dropdown-item" href="/user/searchBySeries/iphone14" > iPhone 14 Series</a></li>
                 <li><a class="dropdown-item" href="#"> iPhone 13 Series </a></li>
                 <li><a class="dropdown-item" href="#"> iPhone 12 Series </a></li>
             </ul>
@@ -197,6 +198,9 @@ ul {
     	window.location.href = "/loginSuccess";
     });
 	
+	$('#cart').click(function(){
+    	window.location.href = "/cart/orders";
+    });
     
   })
 

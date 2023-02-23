@@ -25,6 +25,10 @@ public class HomeController {
 	public String loginSuccess(ModelMap model) {
 		String username = (String) session.getAttribute("username");
 		model.addAttribute("username", username);
+		
+		String orderNumber =(String)  session.getAttribute("orderNumber");
+		model.addAttribute("orderNumber", orderNumber);
+		
 		return "HomePageLogined";
 	}
 	

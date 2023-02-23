@@ -40,7 +40,7 @@ public class Edition {
 	@JoinColumn(name = "maspId")
 	private Telephone telephone;
 	
-	@OneToOne(mappedBy = "edition",cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "edition",cascade = {CascadeType.ALL})
     private Orders orders;
 	
 	@Column(nullable = false)

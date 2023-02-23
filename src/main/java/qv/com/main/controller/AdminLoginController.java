@@ -43,6 +43,13 @@ public class AdminLoginController {
 		
 		session.setAttribute("username", user.getUserName());
 		
+		//get orders of user
+		if(user.getProductcart() != null) {
+			int orderNumber = user.getProductcart().getOrders().size();
+			session.setAttribute("orderNumber", String.valueOf(orderNumber));
+		}
+
+		
 		Object ruri = session.getAttribute("redirect-uri");
 		
 		//authorized only admin can access some pages

@@ -30,12 +30,13 @@ html,body {
         </div>
         <div class="col-3 d-flex justify-content-center">
           <div class="row container ">
-            <div class="col-5 text-center"  id="cart">
-              <i class="fa fa-shopping-cart pt-3" aria-hidden="true"></i><br>
+            <div class="col-5 text-center"  id="cart" style="position: relative;">
+              <i class="fa fa-shopping-cart pt-3" aria-hidden="true" style="font-size: 20px;"></i><br>
               <span>Your Cart</span>
+              <span class="fs-cartic countTotalCart" th:if="${orderNumber != null}">[[${orderNumber}]] </span>
             </div>
             <div class="col-7 text-center"  id="personAccount">
-              <i class="fa fa-user pt-3" aria-hidden="true"></i><br>
+              <i class="fa fa-user pt-3" aria-hidden="true" style="font-size: 20px;"></i><br>
               <span th:if="${username != null}" >Welcome [[${username}]] !</span>
             </div>
           </div>
@@ -50,7 +51,7 @@ html,body {
           <li class="nav-item dropdown" style="padding-left: 50px;"> 
             <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">Apple </a> 
             <ul class="dropdown-menu fade-up">
-                <li><a class="dropdown-item" href="#" > iPhone 14 Series</a></li>
+                <li><a class="dropdown-item" href="/user/searchBySeries/iphone14" > iPhone 14 Series</a></li>
                 <li><a class="dropdown-item" href="#"> iPhone 13 Series </a></li>
                 <li><a class="dropdown-item" href="#"> iPhone 12 Series </a></li>
             </ul>
@@ -105,47 +106,51 @@ html,body {
      </nav>
   </div>
 
-  <!-- display phones -->
-  <div class=" container-fluid mt-3 d-flex justify-content-center row" >
-  	<div class="col-7" id="wrapper">	
+  <!-- display cart -->
+  <div class=" container-fluid mt-3 d-flex justify-content-center row">
+  	<div class="col-8" id="wrapper"  style="background-color:#ffffff;" >	
   	  <div class="row p-2" >
-  	  	<h3> Co 1 san pham trong gio hang</h3>
+  	  	<h3> Có [[${orderNumber}]] sản phẩm trong giỏ hàng</h3>
   	  </div>	
-      <div class="row p-2" th:each="order : ${productcarts.orders}" style="border-top: 2px solid #0090a0">
-        <div class="col-4">
+      <div class="row p-2" th:each="order : ${productcarts.orders}" style="border-top: 2px solid #476e5d">
+        <div class="col-5">
         	<div class="row">
-        	 	<img id="phonePicture" th:src="@{${'/uploads/' + order.edition.telephone.pictureUrl}}" width="150" height="220" >
+        	 	<img id="phonePicture" th:src="@{${'/uploads/' + order.edition.telephone.pictureUrl}}" width="150" height="300" >
         	</div>	
         	<div class="row text-center">
-        		<span style="font-size:20px;"><strong>[[*{order.edition.telephone.name}]]</strong></span>
+        		<span style="font-size:20px;"><strong>[[*{order.edition.telephone.name}]] [[*{order.edition.capacity}]]GB</strong></span>
         	</div>	
         </div>
         
-        <div class="col-4">
-        	<div class="row d-flex justify-content-center" style="margin-top:80px;">
-				<button style="width:40px; height:40px;"><i class="fa fa-minus" aria-hidden="true"></i></button>	
-				<input class="text-center" style="width:40px; height:40px; border:1px solid black; font-size:18px; font-weight:bold;" value="1" readonly/>
-				<button style="width:40px; height:40px;"><i class="fa fa-plus" aria-hidden="true"></i></button>
+        <div class="col-3">
+        	<div class="row d-flex justify-content-center" style="margin-top:110px;">
+				<button style="width:40px; height:40px;" th:attr="onclick=|subAction('${order.id}')|" th:disabled="${order.quantity == 1}"><i class="fa fa-minus" aria-hidden="true"></i></button>	
+				<input class="text-center" style="width:40px; height:40px; border:1px solid black; font-size:18px; font-weight:bold;" th:value="${order.quantity}" readonly/>
+				<button type="button" style="width:40px; height:40px;" th:attr="onclick=|plusAction('${order.id}')|" ><i class="fa fa-plus" aria-hidden="true"></i></button>
         	</div>	
         	<div class="row mt-1 d-flex justify-content-center">
-        		<button style="width:40px; height:40px;"><i style="font-size:20px;" class="fa fa-trash-o" aria-hidden="true"></i> </button>
+        		<button style="width:40px; height:40px;" th:attr="onclick=|deleteAction('${order.id}')|"><i style="font-size:20px;margin-left:-2px;" class="fa fa-trash-o" aria-hidden="true"></i> </button>
         	</div>	
         </div>
         
         <div class="col-4">
-           	<div class="row d-flex justify-content-center" style="margin-top:90px;">
-        		<span class="col-12 text-center"   style="font-weight:bold; font-size: 24px; color:#cb1c22">[[${#numbers.formatDecimal(order.edition.price -order.edition.discount, 0, 'COMMA', 0, 'POINT')}]] VND</span>
+           	<div class="row d-flex justify-content-center" style="margin-top:110px;">
+        		<span class="col-12 text-center originalPrice"   style="font-weight:bold; font-size: 20px; color:#cb1c22">[[${#numbers.formatDecimal((order.edition.price -order.edition.discount)*order.quantity, 0, 'COMMA', 0, 'POINT')}]] VND</span>
         	</div>
         	<div class="row d-flex justify-content-center" >
-				<span class="col-12 text-center"   style="font-weight:bold; font-size: 14px; color:grey"> <del>  [[${#numbers.formatDecimal(order.edition.price, 0, 'COMMA', 0, 'POINT')}]] VND</del></span>
+				<span class="col-12 text-center"   style="font-weight:bold; font-size: 14px; color:grey"> <del>  [[${#numbers.formatDecimal(order.edition.price*order.quantity, 0, 'COMMA', 0, 'POINT')}]] VND</del></span>
         	</div>	
         </div>
-        
-            
-          
-
-        
       </div>
+      
+	<!--total amount -->
+	  <div class="row  p-2 d-flex justify-content-end" style="border-top: 2px solid #476e5d">
+	  	  <div class="col-5  p-2" style="height:120px;font-family: 'Numans', sans-serif;">
+	  	  	 <pre style="font-family: 'Numans', sans-serif;font-size: 16px;">Tổng tiền:                            [[${#numbers.formatDecimal(oriPrice, 0, 'COMMA', 0, 'POINT')}]] VND</pre>
+	  	  	 <pre style="font-family: 'Numans', sans-serif;font-size: 16px;">Khuyến mãi:                        -[[${#numbers.formatDecimal(sale, 0, 'COMMA', 0, 'POINT')}]] VND</pre>
+	  	  	 <pre style="font-family: 'Numans', sans-serif;font-weight:bold;font-size: 18px; color:#cb1c22;"><span style="color:black;">Cần thanh toán:</span>           [[${#numbers.formatDecimal(finalPrice, 0, 'COMMA', 0, 'POINT')}]] VND</pre>
+	  	  </div>		
+  	  </div>	
       
 	</div> 	
   </div>
@@ -162,22 +167,26 @@ html,body {
 		window.location.href = "/user/phoneDetail/" +editionId;
   }
   
+  function plusAction(orderId){
+	  window.location.href = "/cart/orders/plusAction/" +orderId; 
+  }
+  
+  function subAction(orderId){
+	  window.location.href = "/cart/orders/subAction/" +orderId; 
+  }
+  
+  function deleteAction(orderId){
+	  window.location.href = "/cart/orders/deleteAction/" +orderId; 
+  }
+  
   $(document).ready(function () {
-    
-//     $('.phoneItem').hover(function(){
-//     		$(this).find('img').css("transform", "scale(1.04, 1.04)").css('transition-delay', '0.02s') ;
-//     	   $(this).css("border","2px solid #cb1c22");
-//    			$(this).find('.heightCut').css("height", "4px") ;
-//     	}, function(){
-//     		$(this).find('img').css("transform", "none");
-//     		$(this).css("border","2px solid #c8d0cf");
-//     		$(this).find('.heightCut').css("height", "5px") ;
-//     });
-    
     $('#logoQV').click(function(e){
     	window.location.href = "/loginSuccess";
     });
-
+	
+    $('#cart').click(function(){
+    	window.location.href = "/cart/orders";
+    });
     
   })
 

@@ -12,13 +12,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpSession;
 import qv.com.main.entities.Telephone;
+import qv.com.main.entities.User;
 import qv.com.main.service.TelephoneService;
+import qv.com.main.service.UserService;
 
 @Controller
 @RequestMapping("user")
 public class UserSearchPhoneBySeries {
 	@Autowired
 	TelephoneService telephoneService;
+	
+	@Autowired
+	UserService userService;
 	
 	@Autowired
 	HttpSession session;
@@ -29,6 +34,9 @@ public class UserSearchPhoneBySeries {
 		model.addAttribute("username", username);
 		List<Telephone> listProducts = telephoneService.findBySeries(series.get());
         model.addAttribute("telephones", listProducts);
+        
+        User userNew = userService.findById(username).get();
+		model.addAttribute("orderNumber", userNew.getProductcart().getOrders().size());
          
         return "ListProductsBySeries";
 	}

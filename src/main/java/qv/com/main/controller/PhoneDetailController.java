@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.servlet.http.HttpSession;
 import qv.com.main.entities.Edition;
 import qv.com.main.entities.Telephone;
+import qv.com.main.entities.User;
 import qv.com.main.service.EditionService;
 import qv.com.main.service.TelephoneService;
+import qv.com.main.service.UserService;
 
 @Controller
 @RequestMapping("user")
@@ -24,6 +26,9 @@ public class PhoneDetailController {
 	
 	@Autowired
 	EditionService editionService;
+
+	@Autowired
+	UserService userService;
 	
 	@Autowired
 	HttpSession session;
@@ -39,7 +44,10 @@ public class PhoneDetailController {
 		
         model.addAttribute("telephone", tele);
         model.addAttribute("edition", edition);
-         
+        
+        User userNew = userService.findById(username).get();
+		model.addAttribute("orderNumber", userNew.getProductcart().getOrders().size());
+        
         return "PhoneDetail";
 	}
 }

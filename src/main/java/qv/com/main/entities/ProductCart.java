@@ -37,6 +37,11 @@ public class ProductCart {
 	@OneToOne(mappedBy = "productcart",cascade = CascadeType.ALL)
     private User user;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy ="productcart", cascade =CascadeType.ALL)
+	//@OneToMany(fetch = FetchType.EAGER, mappedBy ="productcart", cascade = {CascadeType.PERSIST,CascadeType.MERGE}, orphanRemoval=true) //co the xoa dc
+	@OneToMany(fetch = FetchType.EAGER, mappedBy ="productcart",cascade = {CascadeType.PERSIST,CascadeType.MERGE}, orphanRemoval=true) //co the xoa va edit duoc
 	private List<Orders> orders;
+	
+	public void removeOrder(Orders order) {
+		orders.remove(order);
+    }
 }
