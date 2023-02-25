@@ -34,7 +34,7 @@ public class ProductCart {
 	@Length(max = 20, min =1 , message = "Length is between 1 and 20")
 	private String status;
 	
-	@OneToOne(mappedBy = "productcart",cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "productcart",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private User user;
 	
 	//@OneToMany(fetch = FetchType.EAGER, mappedBy ="productcart", cascade = {CascadeType.PERSIST,CascadeType.MERGE}, orphanRemoval=true) //co the xoa dc

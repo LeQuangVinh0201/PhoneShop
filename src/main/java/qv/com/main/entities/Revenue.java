@@ -1,22 +1,14 @@
 package qv.com.main.entities;
 
 import java.util.Date;
-import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -26,34 +18,36 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="edition")
+@Table(name="revenue")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Edition {
+public class Revenue {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@Column(columnDefinition = "nvarchar(50) not null")
+	private String username;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade =CascadeType.ALL)
-	@JoinColumn(name = "maspId")
-	private Telephone telephone;
+	@Column(columnDefinition = "nvarchar(50) not null")
+	private String phonename;
 	
-	@OneToOne(mappedBy = "edition", orphanRemoval=true)
-    private Orders orders;
-	
-	@Column(nullable = false)
+	@Column(columnDefinition = "nvarchar(50) not null")
 	private Integer capacity;
 	
 	@Column(nullable = false)
-	private Long price;
+	private Integer quantity;
 	
-	@Column
-	private Long discount;
+	@Column(nullable = false)
+	private Long sellprice;
+	
+	@Column(nullable = false)
+	private Long total;
+	
+	@Temporal(TemporalType.DATE)
+	private Date selldate;
 	
 	
-	
-//	@OneToOne(mappedBy = "edition",cascade = CascadeType.ALL)
-//    private Comment comment;
 }

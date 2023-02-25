@@ -46,7 +46,10 @@ public class PhoneDetailController {
         model.addAttribute("edition", edition);
         
         User userNew = userService.findById(username).get();
-		model.addAttribute("orderNumber", userNew.getProductcart().getOrders().size());
+		if(userNew.getProductcart() != null) {
+    		model.addAttribute("orderNumber", userNew.getProductcart().getOrders().size());
+        }
+
         
         return "PhoneDetail";
 	}

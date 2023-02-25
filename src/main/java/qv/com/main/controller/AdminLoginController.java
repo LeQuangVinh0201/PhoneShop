@@ -47,6 +47,8 @@ public class AdminLoginController {
 		if(user.getProductcart() != null) {
 			int orderNumber = user.getProductcart().getOrders().size();
 			session.setAttribute("orderNumber", String.valueOf(orderNumber));
+		}else {
+			session.setAttribute("orderNumber", "0");
 		}
 
 		

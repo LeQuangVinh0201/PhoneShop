@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpSession;
@@ -121,7 +122,10 @@ public class CartController {
 		int oriPrice = 0;
 		int sale = 0;
 		int finalPrice = 0;
-		List<Orders> orderList = user.getProductcart().getOrders();
+		List<Orders> orderList = new ArrayList<>();
+		if(user.getProductcart() != null) {
+			orderList = user.getProductcart().getOrders();
+		}
 		for (int i = 0; i < orderList.size(); i++) {
 			oriPrice += orderList.get(i).getEdition().getPrice() * orderList.get(i).getQuantity();
 			sale += orderList.get(i).getEdition().getDiscount() * orderList.get(i).getQuantity();
@@ -135,9 +139,12 @@ public class CartController {
 		model.addAttribute("productcarts", user.getProductcart());
 		
 		User userNew = userService.findById(username).get();
-		model.addAttribute("orderNumber", userNew.getProductcart().getOrders().size());
+		if(userNew.getProductcart() != null) {
+    		model.addAttribute("orderNumber", userNew.getProductcart().getOrders().size());
+            return "CartsDetail";
+        }
 		
-        return "CartsDetail";
+        return "redirect:/loginSuccess";
 	}
 	
 	@GetMapping("/orders/plusAction/{orderId}")
@@ -176,5 +183,6 @@ public class CartController {
 		
         return "redirect:/cart/orders";
 	}
+	
 
 }

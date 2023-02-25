@@ -9,12 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.servlet.http.HttpSession;
 import qv.com.main.entities.User;
 import qv.com.main.model.AdminLoginDto;
+import qv.com.main.service.UserService;
 
 
 @Controller
 public class HomeController {
 	@Autowired
 	private HttpSession session;
+	
+	@Autowired
+	UserService userService;
 	
 	@RequestMapping("/")
 	public String index1() {
@@ -26,8 +30,10 @@ public class HomeController {
 		String username = (String) session.getAttribute("username");
 		model.addAttribute("username", username);
 		
-		String orderNumber =(String)  session.getAttribute("orderNumber");
-		model.addAttribute("orderNumber", orderNumber);
+		User userNew = userService.findById(username).get();
+		if(userNew.getProductcart() != null) {
+    		model.addAttribute("orderNumber", userNew.getProductcart().getOrders().size());
+        }
 		
 		return "HomePageLogined";
 	}

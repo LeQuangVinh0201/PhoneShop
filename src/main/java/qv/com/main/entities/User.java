@@ -42,7 +42,7 @@ public class User {
 	@Column(columnDefinition = "nvarchar(200)")
 	private String email;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE}, orphanRemoval=true)
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     private ProductCart productcart;
 	

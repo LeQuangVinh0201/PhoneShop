@@ -118,14 +118,14 @@ html,body {
         	 	<img id="phonePicture" th:src="@{${'/uploads/' + order.edition.telephone.pictureUrl}}" width="150" height="300" >
         	</div>	
         	<div class="row text-center">
-        		<span style="font-size:20px;"><strong>[[*{order.edition.telephone.name}]] [[*{order.edition.capacity}]]GB</strong></span>
+        		<span style="font-size:20px;" class = "phoneName"><strong>[[*{order.edition.telephone.name}]] [[*{order.edition.capacity}]]GB</strong></span>
         	</div>	
         </div>
         
         <div class="col-3">
-        	<div class="row d-flex justify-content-center" style="margin-top:110px;">
+        	<div class="row d-flex justify-content-center " style="margin-top:110px;">
 				<button style="width:40px; height:40px;" th:attr="onclick=|subAction('${order.id}')|" th:disabled="${order.quantity == 1}"><i class="fa fa-minus" aria-hidden="true"></i></button>	
-				<input class="text-center" style="width:40px; height:40px; border:1px solid black; font-size:18px; font-weight:bold;" th:value="${order.quantity}" readonly/>
+				<input class="text-center quantityItemNumber" style="width:40px; height:40px; border:1px solid black; font-size:18px; font-weight:bold;" th:value="${order.quantity}" readonly/>
 				<button type="button" style="width:40px; height:40px;" th:attr="onclick=|plusAction('${order.id}')|" ><i class="fa fa-plus" aria-hidden="true"></i></button>
         	</div>	
         	<div class="row mt-1 d-flex justify-content-center">
@@ -146,11 +146,37 @@ html,body {
 	<!--total amount -->
 	  <div class="row  p-2 d-flex justify-content-end" style="border-top: 2px solid #476e5d">
 	  	  <div class="col-5  p-2" style="height:120px;font-family: 'Numans', sans-serif;">
-	  	  	 <pre style="font-family: 'Numans', sans-serif;font-size: 16px;">Tổng tiền:                            [[${#numbers.formatDecimal(oriPrice, 0, 'COMMA', 0, 'POINT')}]] VND</pre>
-	  	  	 <pre style="font-family: 'Numans', sans-serif;font-size: 16px;">Khuyến mãi:                        -[[${#numbers.formatDecimal(sale, 0, 'COMMA', 0, 'POINT')}]] VND</pre>
-	  	  	 <pre style="font-family: 'Numans', sans-serif;font-weight:bold;font-size: 18px; color:#cb1c22;"><span style="color:black;">Cần thanh toán:</span>           [[${#numbers.formatDecimal(finalPrice, 0, 'COMMA', 0, 'POINT')}]] VND</pre>
+	  	  	 <pre style="font-family: 'Numans', sans-serif;font-size: 16px;" id="oriPrice">Tổng tiền:                            [[${#numbers.formatDecimal(oriPrice, 0, 'COMMA', 0, 'POINT')}]] VND</pre>
+	  	  	 <pre style="font-family: 'Numans', sans-serif;font-size: 16px;" id="sale">Khuyến mãi:                        -[[${#numbers.formatDecimal(sale, 0, 'COMMA', 0, 'POINT')}]] VND</pre>
+	  	  	 <pre style="font-family: 'Numans', sans-serif;font-weight:bold;font-size: 18px; color:#cb1c22;" id="finalPrice"><span style="color:black;">Cần thanh toán:</span>           [[${#numbers.formatDecimal(finalPrice, 0, 'COMMA', 0, 'POINT')}]] VND</pre>
 	  	  </div>		
-  	  </div>	
+  	  </div>
+  	  
+	<!--Order Form 	 -->
+		<form class="row mt-2 p-2 needs-validation" method="post" th:action="@{/cart/mail/complete}" style="border-top: 2px solid #476e5d">
+		  <div class="row  d-flex flex-row-reverse p-2">
+		    <div class="col-4">
+		      <input type="number" class="form-control" placeholder="Nhập số điện thoại" name="phoneNumber" required>
+		      <input type="hidden" class="form-control"  id="phoneNameList" name="phoneNameList">
+		      <input type="hidden" class="form-control"  id="oriPriceForm" name="oriPriceForm">
+		      <input type="hidden" class="form-control"  id="saleForm" name="saleForm">
+		      <input type="hidden" class="form-control"  id="finalPriceForm" name="finalPriceForm">
+		    </div>
+		    <div class="col-4">
+		      <input type="text" class="form-control" placeholder="Nhập họ và tên" name="fullName" required>
+		    </div>
+		  </div>
+		  <div class="row d-flex flex-row-reverse  p-2">
+		  	<div class="col-8">
+		      <input type="text" class="form-control" placeholder="Nhập email" name="email" required>
+		    </div>
+		  </div>
+		  <div class="row d-flex flex-row-reverse  p-2">
+		  	<div class="col-8">
+		      <input type="submit" class="form-control btn btn-danger" value="Hoàn tất đặt hàng" required>
+		    </div>
+		  </div>
+		</form>
       
 	</div> 	
   </div>
@@ -188,9 +214,27 @@ html,body {
     	window.location.href = "/cart/orders";
     });
     
-  })
-
-
+    var numberArray = [];
+    
+    $('.quantityItemNumber').each(function(){
+    	numberArray.push($(this).val());
+    });
+    
+    var phoneNameList = "";
+    var i = 0;
+    $('.phoneName').each(function(){
+    	phoneNameList += $(this).text() + " với số lượng :" + numberArray[i] +  " \n" ;
+    	i++;
+    });
+    i = 0;
+    
+    $('#phoneNameList').val(phoneNameList);
+    
+    $('#oriPriceForm').val($('#oriPrice').text());
+    $('#saleForm').val($('#sale').text());
+    $('#finalPriceForm').val($('#finalPrice').text());
+    
+  })	
 </script>
 </body>
 </html>

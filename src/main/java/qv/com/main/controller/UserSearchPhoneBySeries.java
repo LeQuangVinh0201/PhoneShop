@@ -36,7 +36,10 @@ public class UserSearchPhoneBySeries {
         model.addAttribute("telephones", listProducts);
         
         User userNew = userService.findById(username).get();
-		model.addAttribute("orderNumber", userNew.getProductcart().getOrders().size());
+        if(userNew.getProductcart() != null) {
+    		model.addAttribute("orderNumber", userNew.getProductcart().getOrders().size());
+        }
+
          
         return "ListProductsBySeries";
 	}
