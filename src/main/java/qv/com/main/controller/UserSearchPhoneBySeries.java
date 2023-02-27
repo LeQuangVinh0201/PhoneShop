@@ -43,4 +43,20 @@ public class UserSearchPhoneBySeries {
          
         return "ListProductsBySeries";
 	}
+	
+	@GetMapping("/findByName/{name}")
+	public String listProducts(Model model, @PathVariable(name="name") String name) {
+		String username = (String) session.getAttribute("username");
+		model.addAttribute("username", username);
+		
+		List<Telephone> listProducts = telephoneService.findByNameLike(name);
+        model.addAttribute("telephones", listProducts);
+        
+        User userNew = userService.findById(username).get();
+        if(userNew.getProductcart() != null) {
+    		model.addAttribute("orderNumber", userNew.getProductcart().getOrders().size());
+        }
+
+        return "ListProductsBySeries";
+	}
 }

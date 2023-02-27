@@ -1,12 +1,16 @@
 package qv.com.main.controller;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -29,11 +33,15 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import qv.com.main.entities.Edition;
+import qv.com.main.entities.Revenue;
 import qv.com.main.entities.Telephone;
 import qv.com.main.model.AdminLoginDto;
+import qv.com.main.model.ExcelGenerator;
+import qv.com.main.service.RevenueService;
 import qv.com.main.service.TelephoneService;
 
 
@@ -42,6 +50,9 @@ import qv.com.main.service.TelephoneService;
 public class AdminManage {
 	@Autowired
 	TelephoneService telephoneService;
+	
+	@Autowired
+	RevenueService revenueService;
 	
 	@Autowired
 	HttpSession session;
@@ -63,14 +74,6 @@ public class AdminManage {
 			
 			if(existedPhone.isPresent()) {
 				telephone = existedPhone.get();
-				
-//				for (int i = 0; i < telephone.getEditions().size(); i++) {
-//					Edition edi = telephone.getEditions().get(i);
-//					BigDecimal number = new BigDecimal(edi.getPrice());
-//					double myDouble = number.doubleValue();
-//					edi.setPrice(myDouble);
-//					
-//			    }
 			}else {
 				telephone = new Telephone();
 			}
@@ -167,5 +170,51 @@ public class AdminManage {
 		
 		return "redirect:/admin/manage/products";
 	}
+	
+	@GetMapping("/manage/statistic")
+	public String getStatistic(ModelMap model) {
+		String username = (String) session.getAttribute("username");
+		model.addAttribute("username", username);
+		
+		return "Statistic";
+	}
+	
+	
+	@PostMapping("/manage/searchRevenue")
+	public String getStatisticTable(ModelMap model,@RequestParam  Date startDate, @RequestParam Date endDate) {
+		String username = (String) session.getAttribute("username");
+		model.addAttribute("username", username);
+		
+		Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+		String startForm = formatter.format(startDate);
+		String endForm = formatter.format(endDate);
+		
+		model.addAttribute("startDateForm", startForm);
+		model.addAttribute("endDateForm", endForm);
+		
+		List<Revenue> revenueList = revenueService.findByStartEndDate(startDate,endDate);
+		
+		model.addAttribute("revenueList", revenueList);
+		
+		return "StatisticList";
+	}
+	
+	
+	@PostMapping("/manage/exportExcel")
+	public void exportExcel (HttpServletResponse response, ModelMap model,@RequestParam  Date startDate, @RequestParam Date endDate)throws IOException {
+		response.setContentType("application/octet-stream");
+		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+		String currentDateTime = dateFormatter.format(new Date());
+
+		String headerKey = "Content-Disposition";
+		String headerValue = "attachment; filename=Statistic_QVstore_" + currentDateTime + ".xlsx";
+		response.setHeader(headerKey, headerValue);
+		
+		List<Revenue> revenueList = revenueService.findByStartEndDate(startDate,endDate);
+		ExcelGenerator excelGen = new ExcelGenerator(revenueList);
+		
+		excelGen.generate(response);
+	}
+	
 	
 }

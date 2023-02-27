@@ -23,6 +23,10 @@ public class TelephoneService implements TelephoneRepository{
 	
 	
 	
+	public List<Telephone> findByNameLike(String name) {
+		return telephoneRepository.findByNameLike(name);
+	}
+
 	@Override
 	public <S extends Telephone> S save(S entity) {
 		return telephoneRepository.save(entity);

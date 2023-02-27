@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<link rel="stylesheet" href="/bootstrap.css">
+<script src="/bootstrap.js"></script>
+<link rel="stylesheet" type="text/css" href="/CustomeCss/MainPage.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Insert title here</title>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  overflow-y:scroll;
+  height:500px;
+  width:800px;
+  display:block;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+}
+</style>
+</head>
+<body>
+<div style="background-color: #f4f4f4;">
+  <div id="header" class="container-fluid text-white">
+    <div class="row" style="padding: 0;">
+        <div class="col-2" style="padding:5px">
+          <img src="/LogoImage/logo.png"  width="100" height="70" >
+        </div>
+        <div class="col-9 d-flex justify-content-center">
+          <div class="row container ">
+            <div class="col-12 text-center" style="margin-top: auto;margin-bottom: auto;"  id="personAccount">
+              <h3 th:if="${username != null}">
+              <i class="fa fa-user" aria-hidden="true"></i>
+              Welcome Admin [[${username}]]!</h3>
+              <P style="font-size:22px;font-weight:bold;">Thống Kê Doanh Thu</P>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  
+  <div class="container-fluid mt-4 pb-4 d-flex justify-content-center">
+    <nav class="navbar navbar-expand-lg navbar-dark " style="background-color: #c8d0cf; border-radius: 10px; width: 60%;">
+      <div class="container-fluid  d-flex justify-content-around" >
+        <form th:action="@{/admin/manage/searchRevenue}" method="post">
+		  <label for="startDate">Từ ngày:</label>
+		  <input type="date" id="startDate" name="startDate" th:value="${startDateForm!=null}? ${startDateForm} : ''">
+		  <label for="endDate" style="margin-left:30px;">Đến ngày:</label>
+		  <input type="date" id="endDate" name="endDate" th:value="${endDateForm!=null}? ${endDateForm} : ''">
+		  <input type="submit" class="btn btn-success" style="margin-left:30px;width:120px;" value="Search">
+		  <button class="btn btn-danger" formmethod="post" formaction="/admin/manage/exportExcel">Export Excel</button>
+		</form>
+      </div> 
+     </nav>
+  </div>
+  
+        
+   <div class="container d-flex justify-content-center pb-4 p-2">
+    <table class="table table-striped" >
+      <tbody style="width:80%;">
+		<tr style="font-weight:bold;">
+			<td style="width:22%;">Phone Name</td>
+			<td style="width:10%;">Capacity(GB)</td>
+			<td style="width:10%;">Quantity</td>
+			<td style="width:14%;">Sell Price</td>
+			<td style="width:14%;">Revenue</td>
+			<td style="width:14%;">Sell Date</td>
+			<td style="width:14%;">User Name</td>
+		</tr>
+		<tr th:each="item : ${revenueList}">
+			<td th:text="${item.phonename}"></td>
+			<td th:text="${item.capacity}"></td>
+			<td th:text="${item.quantity}"></td>
+			<td th:text="${item.sellprice}" class="sellprice"></td>
+			<td th:text="${item.total}" class="totalItem"></td>
+			<td th:text="${item.selldate}" class="selldate"></td>
+			<td th:text="${item.username}"></td>
+		</tr>
+		<tr style="font-weight:bold;background-color:#e8f0f7;font-size:20px;" >
+			<td colspan="4" class="text-center">Tổng :</td>
+			<td colspan="3" style="color:red;" id="totalAmount"></td>
+		</tr>
+		</tbody>	
+	</table>
+   </div>
+
+</div>
+
+
+<script>
+  $(document).ready(function () {
+//     $('#iphone14, #cart').click(function(){
+//       alert("hello");
+//     });
+    
+    $('#personAccount').click(function(){
+    	window.location.href = "/alogin";
+    });
+    
+    var totalAmount = 0;
+    
+	$('.totalItem').each(function(){
+		totalAmount += Number($(this).text());
+		$(this).text(Number($(this).text()).toLocaleString('vi-VN', {style : 'currency', currency : 'VND'}));
+	}); 
+	
+	$('.sellprice').each(function(){
+		$(this).text(Number($(this).text()).toLocaleString('vi-VN', {style : 'currency', currency : 'VND'}));
+	});
+	
+	$('#totalAmount').text(totalAmount.toLocaleString('vi-VN', {style : 'currency', currency : 'VND'}));
+	
+	function reformatDate(dateStr){
+	  var dArr = dateStr.split("-");  // ex input: "2010-01-18"
+	  return dArr[2]+ "/" +dArr[1]+ "/" +dArr[0]; //ex output: "18/01/2010"
+	}
+	
+	$('.selldate').each(function(){
+		$(this).text(reformatDate($(this).text())) ;
+	});
+	
+  })
+
+
+</script>
+</body>
+</html>

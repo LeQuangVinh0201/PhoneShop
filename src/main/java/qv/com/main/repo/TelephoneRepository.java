@@ -83,6 +83,9 @@ public interface TelephoneRepository extends JpaRepository<Telephone, String>{
 	
 	List<Telephone> findBySeries(String series);
 	
+	@Query("Select t from Telephone t where t.name LIKE  %?1%")
+	List<Telephone> findByNameLike(String name);
+	
 //	@Query("select t from telephones t")
 //	List<Telephone> findByBestSell();
 }

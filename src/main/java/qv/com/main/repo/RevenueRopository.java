@@ -1,5 +1,6 @@
 package qv.com.main.repo;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -9,10 +10,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.stereotype.Repository;
 
 import qv.com.main.entities.Revenue;
+import qv.com.main.entities.Telephone;
 
 @Repository
 public interface RevenueRopository extends JpaRepository<Revenue, Integer>{
@@ -78,5 +81,8 @@ public interface RevenueRopository extends JpaRepository<Revenue, Integer>{
 	<S extends Revenue> List<S> saveAll(Iterable<S> entities);
 
 	<S extends Revenue> S save(S entity);
+	
+	@Query("Select r from Revenue r where ?1 <= r.selldate And r.selldate <= ?2")
+	List<Revenue> findByStartEndDate(Date startDate, Date endDate);
 
 }

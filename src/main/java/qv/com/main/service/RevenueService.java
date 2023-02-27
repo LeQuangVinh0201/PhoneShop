@@ -1,5 +1,6 @@
 package qv.com.main.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -13,12 +14,17 @@ import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuer
 import org.springframework.stereotype.Service;
 
 import qv.com.main.entities.Revenue;
+import qv.com.main.entities.Telephone;
 import qv.com.main.repo.RevenueRopository;
 
 @Service
 public class RevenueService implements RevenueRopository{
 	@Autowired
 	RevenueRopository revenueRopository;
+
+	public List<Revenue> findByStartEndDate(Date startDate, Date endDate) {
+		return revenueRopository.findByStartEndDate(startDate, endDate);
+	}
 
 	@Override
 	public <S extends Revenue> S save(S entity) {
