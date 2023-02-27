@@ -39,10 +39,12 @@ import jakarta.validation.Valid;
 import qv.com.main.entities.Edition;
 import qv.com.main.entities.Revenue;
 import qv.com.main.entities.Telephone;
+import qv.com.main.entities.User;
 import qv.com.main.model.AdminLoginDto;
 import qv.com.main.model.ExcelGenerator;
 import qv.com.main.service.RevenueService;
 import qv.com.main.service.TelephoneService;
+import qv.com.main.service.UserService;
 
 
 @Controller
@@ -53,6 +55,9 @@ public class AdminManage {
 	
 	@Autowired
 	RevenueService revenueService;
+	
+	@Autowired
+	UserService userService;
 	
 	@Autowired
 	HttpSession session;
@@ -214,6 +219,42 @@ public class AdminManage {
 		ExcelGenerator excelGen = new ExcelGenerator(revenueList);
 		
 		excelGen.generate(response);
+	}
+	
+	@GetMapping("/manage/accounts")
+	public String accounts(ModelMap model) {
+		String username = (String) session.getAttribute("username");
+		model.addAttribute("username", username);
+		
+		List<User> userList = userService.findAll();
+		model.addAttribute("userList", userList);
+		
+		return "AccountList";
+	}
+	
+	@GetMapping("/manage/accounts/edit/{userName}")
+	public String editAccounts(ModelMap model, @PathVariable(name="userName") String userName) {
+		
+		User user = userService.findById(userName).get();
+		model.addAttribute("user", user);
+		
+		return "EditAccount";
+	}
+	
+	@PostMapping("/manage/accounts/edit")
+	public String saveEditAccounts(ModelMap model, User user) {
+		
+		userService.saveNoUpdatePass(user);
+		
+		return "redirect:/admin/manage/accounts";
+	}
+	
+	@GetMapping("/manage/accounts/delete/{userName}")
+	public String deleteAccounts(ModelMap model, @PathVariable(name="userName") String userName) {
+		
+		userService.deleteById(userName);
+		
+		return "redirect:/admin/manage/accounts";
 	}
 	
 	

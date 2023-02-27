@@ -46,7 +46,7 @@ public class User {
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     private ProductCart productcart;
 	
-	@OneToMany(mappedBy ="user", cascade =CascadeType.ALL)
+	@OneToMany(mappedBy ="user", cascade =CascadeType.ALL, orphanRemoval=true)
 	Set<Comment> comments;
 	
 	

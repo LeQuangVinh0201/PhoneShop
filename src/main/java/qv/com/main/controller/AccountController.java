@@ -38,6 +38,7 @@ public class AccountController {
 		}
 		User user = new  User();
 		BeanUtils.copyProperties(dto, user);
+		user.setRole("User");
 		userService.save(user);
 		
 		model.addAttribute("message", "User is saved");
