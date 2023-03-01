@@ -257,5 +257,14 @@ public class AdminManage {
 		return "redirect:/admin/manage/accounts";
 	}
 	
+	@GetMapping("/backhome")
+	public String backhome(ModelMap model) {
+		
+		String username = (String) session.getAttribute("username");
+		model.addAttribute("username", username);
+		
+		return "AdminHomePage";
+	}
+	
 	
 }

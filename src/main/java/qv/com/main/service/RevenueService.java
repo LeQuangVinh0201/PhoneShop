@@ -22,6 +22,10 @@ public class RevenueService implements RevenueRopository{
 	@Autowired
 	RevenueRopository revenueRopository;
 
+	public List<Integer> findEditionBestSale() {
+		return revenueRopository.findEditionBestSale();
+	}
+
 	public List<Revenue> findByStartEndDate(Date startDate, Date endDate) {
 		return revenueRopository.findByStartEndDate(startDate, endDate);
 	}

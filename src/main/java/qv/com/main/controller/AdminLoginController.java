@@ -1,5 +1,7 @@
 package qv.com.main.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -11,8 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import qv.com.main.entities.Edition;
 import qv.com.main.entities.User;
 import qv.com.main.model.AdminLoginDto;
+import qv.com.main.service.EditionService;
+import qv.com.main.service.RevenueService;
 import qv.com.main.service.UserService;
 
 @Controller
@@ -23,10 +28,24 @@ public class AdminLoginController {
 	@Autowired
 	private HttpSession session;
 	
+	@Autowired
+	RevenueService revenueService;
+	
+	@Autowired
+	EditionService editionService;
+	
 	@GetMapping("alogin") 
 	public String login(ModelMap model) {
 		model.addAttribute("account", new AdminLoginDto());
 		return "LoginPage";
+	}
+	
+	@GetMapping("logout") 
+	public String logout(ModelMap model) {
+		model.remove("username");
+		model.clear();
+		
+		return "redirect:/";
 	}
 	
 	@PostMapping("alogin")
@@ -66,6 +85,10 @@ public class AdminLoginController {
 		}
 		
 		//user login success
+		List<Integer> editionIdList = revenueService.findEditionBestSale();
+		List<Edition> editionList = editionService.findAllById(editionIdList);
+		model.addAttribute("editionList", editionList);
+		
 		return new ModelAndView("forward:/loginSuccess", model);
 	}
 	

@@ -88,6 +88,7 @@ public class MailController {
 			rev.setPhonename(tele.getName());
 			rev.setCapacity(orderList.get(i).getEdition().getCapacity());
 			rev.setQuantity(orderList.get(i).getQuantity());
+			rev.setEditionId(orderList.get(i).getEdition().getId());
 			rev.setSellprice(orderList.get(i).getEdition().getPrice() - orderList.get(i).getEdition().getDiscount());
 			rev.setTotal((orderList.get(i).getEdition().getPrice() - orderList.get(i).getEdition().getDiscount())* orderList.get(i).getQuantity());
 			rev.setSelldate(new Date());
@@ -102,7 +103,7 @@ public class MailController {
 		userService.saveNoUpdatePass(user);
 
         // Send Message!
-        emailSender.send(message);
+//        emailSender.send(message); 
 		
         return "redirect:/loginSuccess";
 	}

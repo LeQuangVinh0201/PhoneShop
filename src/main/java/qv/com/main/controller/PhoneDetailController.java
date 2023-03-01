@@ -45,11 +45,16 @@ public class PhoneDetailController {
         model.addAttribute("telephone", tele);
         model.addAttribute("edition", edition);
         
-        User userNew = userService.findById(username).get();
-		if(userNew.getProductcart() != null) {
-    		model.addAttribute("orderNumber", userNew.getProductcart().getOrders().size());
+        if(username != null) {
+        	User userNew = userService.findById(username).get();
+        	
+    		if(userNew.getProductcart() != null) {
+        		model.addAttribute("orderNumber", userNew.getProductcart().getOrders().size());
+            }
+        }else {
+        	model.addAttribute("message", "You need login first!");
+        	return "forward:/";
         }
-
         
         return "PhoneDetail";
 	}

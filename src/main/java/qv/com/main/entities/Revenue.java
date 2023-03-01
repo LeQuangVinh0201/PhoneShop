@@ -34,8 +34,11 @@ public class Revenue {
 	@Column(columnDefinition = "nvarchar(50) not null")
 	private String phonename;
 	
-	@Column(columnDefinition = "nvarchar(50) not null")
+	@Column(nullable = false)
 	private Integer capacity;
+	
+	@Column(nullable = false)
+	private Integer editionId;
 	
 	@Column(nullable = false)
 	private Integer quantity;

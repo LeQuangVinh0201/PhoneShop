@@ -22,7 +22,8 @@ td, th {
 <body>
 	<h1>List Of Telephones</h1>
 	<hr />
-	<a style="color:blue;" th:href="@{/admin/manage/products/newOredit}">New Telephone</a>
+	<a style="color:#02f4f2;" th:href="@{/admin/manage/products/newOredit}">New Telephone</a>
+	<a style="color:#02f4f2;margin-left:10px;" th:href="@{/admin/backhome}">Back Home</a>
 	<hr />
 	<div th:if="${message != null}">
 		<h3 th:text="${message}"></h3>
@@ -41,12 +42,15 @@ td, th {
 			<td th:text="${item.name}"></td>
 			<td th:text="${item.brand.brand}"></td>
 			<td th:text="${item.series}"></td>
-			<td><img th:src="@{${item.photoUrlPath}}" width="120" height="150"/></td>
+			<td><img th:src="@{${item.photoUrlPath}}" width="150" height="150"/></td>
 			<td>
-				<a style="color:blue;" th:href="@{'/admin/manage/products/newOredit/' + ${item.masp}}">Edit</a>
-				<a style="color:blue;" th:href="@{'/admin/manage/products/delete/' + ${item.masp}}">Delete</a>
+				<a style="color:#02f4f2;" th:href="@{'/admin/manage/products/newOredit/' + ${item.masp}}">Edit</a>
+				<a style="color:#02f4f2;margin-left:10px;" th:href="@{'/admin/manage/products/delete/' + ${item.masp}}">Delete</a>
 			</td>
 		</tr>
 	</table>
+<script>
+
+</script>	
 </body>
 </html>

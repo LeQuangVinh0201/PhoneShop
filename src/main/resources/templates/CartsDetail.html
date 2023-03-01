@@ -22,22 +22,26 @@ html,body {
   <div id="header" class="container-fluid text-white">
     <div class="row" style="padding: 0;">
         <div class="col-2" style="padding:5px">
-          <img src="/LogoImage/logo.png" id="logoQV" width="100" height="70" >
+          <img src="/LogoImage/logo.png"  width="100" height="70" style="cursor: pointer; ">
         </div>
-        <div class="col-7 d-flex justify-content-center">
-          <input type="text" id="nameSearch" placeholder=" Please enter product's name to search" style="width: 70%; height: 50%;margin-top: 20px; border-radius: 10px;">
+        <div class="col-6 d-flex justify-content-center pl-4">
+          <input type="text" id="nameSearch" placeholder=" Please enter product's name to search" style="width: 80%; height: 50%;margin-top: 20px; margin-left:90px; border-radius: 10px;">
           <button type="button" id="searchByNameBtn" class="btn btn-danger" style="width:50px ; height: 50%;margin-top: 20px;"><i class="fa fa-search" aria-hidden="true"></i></button>
         </div>
-        <div class="col-3 d-flex justify-content-center">
-          <div class="row container ">
-            <div class="col-5 text-center"  id="cart" style="position: relative;">
-              <i class="fa fa-shopping-cart pt-3" aria-hidden="true" style="font-size: 20px;"></i><br>
+        <div class="col-4 d-flex justify-content-center">
+          <div class="row container ml-4">
+            <div class="col-4 text-center"  id="cart" style="position: relative;">
+              <i class="fa fa-shopping-cart pt-3" aria-hidden="true" style="font-size: 18px;"></i><br>
               <span>Your Cart</span>
               <span class="fs-cartic countTotalCart" th:if="${orderNumber != null}">[[${orderNumber}]] </span>
             </div>
-            <div class="col-7 text-center"  id="personAccount">
-              <i class="fa fa-user pt-3" aria-hidden="true" style="font-size: 20px;"></i><br>
-              <span th:if="${username != null}" >Welcome [[${username}]] !</span>
+            <div class="col-5 text-center"  id="personAccount">
+              <i class="fa fa-user pt-3" aria-hidden="true" style="font-size: 18px;"></i><br>
+              <span th:if="${username != null}" >Hi [[${username}]] !</span>
+            </div>
+            <div class="col-3 text-center"  id="logoutAccount" th:if="${username != null}">
+              <i class="fa fa-sign-out pt-3" aria-hidden="true" style="font-size: 18px;"></i><br>
+              <span th:if="${username != null}">Log out</span>
             </div>
           </div>
         </div>
@@ -208,6 +212,10 @@ html,body {
   $(document).ready(function () {
     $('#logoQV').click(function(e){
     	window.location.href = "/loginSuccess";
+    });
+    
+    $('#logoutAccount').click(function(){
+    	window.location.href = "/logout" ;
     });
 	
     $('#cart').click(function(){

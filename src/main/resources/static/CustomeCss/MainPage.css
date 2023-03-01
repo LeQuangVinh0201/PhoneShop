@@ -4,14 +4,14 @@
     height: 80px;
 }
 
-#iphone14, #cart, #personAccount, #phonePicture, #logoQV {
+#cart, #personAccount, #phonePicture, #logoQV, #logoutAccount,#backhome {
      cursor: pointer; 
 }
 
 .fs-cartic{
 	position: absolute;
     top: 10px;
-    left: 60px;
+    left: 66px;
     width: 15px;
     height: 15px;
     line-height: 15px;

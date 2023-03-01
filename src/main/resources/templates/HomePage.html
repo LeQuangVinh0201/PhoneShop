@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -52,9 +52,9 @@
           <li class="nav-item dropdown" style="padding-left: 50px;">
             <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">  Samsung  </a>
               <ul class="dropdown-menu fade-up">
-                  <li><a class="dropdown-item" href="#"> Galaxy Z Series</a></li>
-                  <li><a class="dropdown-item" href="#"> Galaxy S Series </a></li>
-                  <li><a class="dropdown-item" href="#"> Galaxy A Series </a></li>
+                  <li><a class="dropdown-item" href="/user/searchBySeries/galaxyz"> Galaxy Z Series</a></li>
+                  <li><a class="dropdown-item" href="/user/searchBySeries/galaxys"> Galaxy S Series </a></li>
+                  <li><a class="dropdown-item" href="/user/searchBySeries/galaxya"> Galaxy A Series </a></li>
               </ul>
           </li>
           <li class="nav-item dropdown" style="padding-left: 50px;">
@@ -98,6 +98,55 @@
       </div> 
      </nav>
   </div>
+  
+<!--   Phone Brand -->
+  <div class="container-fluid mt-2 d-flex justify-content-center">
+    <nav class="navbar navbar-expand-lg navbar-dark " style="background-color:#fbfbfd; border-radius: 10px; width: 80%;">
+      <div class="container-fluid  d-flex justify-content-around" >
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown" style="padding-left: 50px;"> 
+            <a class="text-white" href="user/searchBySeries/iphone14" >
+				<img src="/LogoImage/iPhone-brand.png"  width="80" height="50">            
+            </a> 
+          </li>
+          <li class="nav-item dropdown" style="padding-left: 50px;">
+          	<a class=" text-white" >
+				<img src="/LogoImage/Samsung-brand.png"  width="80" height="50">            
+            </a>
+          </li>
+          <li class="nav-item dropdown" style="padding-left: 50px;">
+          	<a class=" text-white" >
+				<img src="/LogoImage/Xiaomi-brand.png"  width="80" height="50">            
+            </a>
+          </li>
+          <li class="nav-item dropdown" style="padding-left: 50px;">
+          	<a class=" text-white" >
+				<img src="/LogoImage/Oppo-brand.png"  width="80" height="50">            
+            </a>
+          </li>
+          <li class="nav-item dropdown" style="padding-left: 50px;">
+          	<a class=" text-white" >
+				<img src="/LogoImage/Vivo-brand.png"  width="80" height="50">            
+            </a>
+          </li>
+          <li class="nav-item dropdown" style="padding-left: 50px;">
+          	<a class=" text-white" >
+				<img src="/LogoImage/Nokia-brand.png"  width="80" height="50">            
+            </a>
+          </li>
+          <li class="nav-item dropdown" style="padding-left: 50px;">
+          	<a class=" text-white" >
+				<img src="/LogoImage/Realme-brand.png"  width="100" height="50">            
+            </a>
+          </li>
+        </ul>
+      </div> 
+     </nav>
+  </div>
+  
+  <div th:if="${message != null}" style="height:50px;color:#cb1c22;" class="text-center p-2">
+		<h3 th:text="${message}"></h3>
+  </div>
 
   <div class="container-fluid mt-3 d-flex justify-content-center ">
     <img src="/LogoImage/iphone14.png"  width="1200" height="600"  id="iphone14">
@@ -110,38 +159,40 @@
 
   <div class="mt-3  d-flex justify-content-center ">
       <div class="row container-fluid" style="width: 1250px;">
-        <div class="col-3 bg-danger">
+          <div class="col-3 mt-3 phoneItem" style="background-color:#c8d0cf;border:2px solid #c8d0cf;"  th:each="edi : ${editionList}">
           <div class=" d-flex justify-content-center">
-            <img src="iphone14promax.png" width="250" height="250" style="border-radius: 10px; margin-top: 15px;">
+            <img id="phonePicture" th:src="@{${'/uploads/' + edi.telephone.pictureUrl}}" th:attr="onclick=|phoneDetail('*{edi.id}')|"  width="250" height="250" style="border-radius: 10px; margin-top: 15px;">
           </div>
-          <div>
-            <span style="padding-left: 11px;font-weight:bold; font-size: 18px;">Iphone 14 Pro Max 128GB</span>
+          <div class="row d-flex justify-content-center mt-2">
+            <span class="col-12 text-center"  style="font-weight:bold; font-size: 16px;">[[*{edi.telephone.name}]]  [[*{edi.capacity}]]GB</span>
           </div>
-          <div id="ip14promax" class="row d-flex justify-content-center bg-success" style="width: 250px; margin-left: 11px;">
-              <button class="col-4 btn btn-dark" type="button"  style="padding: 0px;"> 128GB </button>  
-              <button class="col-4 btn btn-secondary" type="button"  style="padding: 0px;"> 256GB </button>  
-              <button class="col-4 btn btn-secondary" type="button"  style="padding: 0px;"> 512GB </button>  
+          <div id="" class="row d-flex justify-content-center" style="width: 250px; margin-left: 11px;">
+              <span class="col-12 text-center"   style="font-weight:bold; font-size: 14px; color:#cb1c22"> <del>  [[${#numbers.formatDecimal(edi.price, 0, 'COMMA', 0, 'POINT')}]] VND</del></span>  
           </div>
-
-          <div class="mt-4">
-            thong tin detail
+          <div id="" class="row d-flex justify-content-center" style="width: 250px; margin-left: 11px;">
+              <span class="col-12 text-center"   style="font-weight:bold; font-size: 22px; color:#cb1c22">[[${#numbers.formatDecimal(edi.price -edi.discount, 0, 'COMMA', 0, 'POINT')}]] VND</span>  
           </div>
-
-        </div>
-
-
-        <div class="col-3 bg-success"></div>
-        <div class="col-3 bg-warning"></div>
-        <div class="col-3 bg-success"></div>
-        
-        
+          <div id="ip14promax" class="row d-flex justify-content-center mt-2 mb-1" style="width: 250px; height: 35px ; margin-left: 10px;">
+              <button class="col-4 btn btn-danger" type="button" th:attr="onclick=|phoneDetail('*{edi.id}')|" style="padding: 0px;width: 120px;"> BUY NOW </button>  
+              <button class="col-4 btn btn-secondary" type="button" th:attr="onclick=|phoneDetail('*{edi.id}')|" style="width: 120px;margin-left:5px"> DETAIL </button>  
+          </div>
+          </div>
       </div>
-  </div>
+      <div>
+	 	<div class="heightCut" style="height:30px"> </div>
+  	  </div>
+   </div>
+	 	
 
 </div>
 
 
 <script>
+
+  function phoneDetail(editionId){
+	window.location.href = "/user/phoneDetail/" +editionId;
+  }
+
   $(document).ready(function () {
     $('#iphone14, #cart').click(function(){
       alert("hello");
@@ -164,6 +215,16 @@
         }
       })
     });
+    
+    $('.phoneItem').hover(function(){
+		$(this).find('img').css("transform", "scale(1.04, 1.04)").css('transition-delay', '0.02s') ;
+	   $(this).css("border","2px solid #cb1c22");
+			$(this).find('.heightCut').css("height", "4px") ;
+	}, function(){
+		$(this).find('img').css("transform", "none");
+		$(this).css("border","2px solid #c8d0cf");
+// 		$(this).find('.heightCut').css("height", "5px") ;
+	});
 
     
   })

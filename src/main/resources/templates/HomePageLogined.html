@@ -18,20 +18,24 @@
         <div class="col-2" style="padding:5px">
           <img src="/LogoImage/logo.png"  width="100" height="70" style="cursor: pointer; ">
         </div>
-        <div class="col-7 d-flex justify-content-center">
-          <input type="text" id="nameSearch" placeholder=" Please enter product's name to search" style="width: 70%; height: 50%;margin-top: 20px; border-radius: 10px;">
+        <div class="col-6 d-flex justify-content-center pl-4">
+          <input type="text" id="nameSearch" placeholder=" Please enter product's name to search" style="width: 80%; height: 50%;margin-top: 20px; margin-left:90px; border-radius: 10px;">
           <button type="button" id="searchByNameBtn" class="btn btn-danger" style="width:50px ; height: 50%;margin-top: 20px;"><i class="fa fa-search" aria-hidden="true"></i></button>
         </div>
-        <div class="col-3 d-flex justify-content-center">
-          <div class="row container ">
-            <div class="col-5 text-center"  id="cart" style="position: relative;">
-              <i class="fa fa-shopping-cart pt-3" aria-hidden="true" style="font-size: 20px;"></i><br>
+        <div class="col-4 d-flex justify-content-center">
+          <div class="row container ml-4">
+            <div class="col-4 text-center"  id="cart" style="position: relative;">
+              <i class="fa fa-shopping-cart pt-3" aria-hidden="true" style="font-size: 18px;"></i><br>
               <span>Your Cart</span>
               <span class="fs-cartic countTotalCart" th:if="${orderNumber != null}">[[${orderNumber}]] </span>
             </div>
-            <div class="col-7 text-center"  id="personAccount">
-              <i class="fa fa-user pt-3" aria-hidden="true" style="font-size: 20px;"></i><br>
-              <span th:if="${username != null}" >Welcome [[${username}]] !</span>
+            <div class="col-5 text-center"  id="personAccount">
+              <i class="fa fa-user pt-3" aria-hidden="true" style="font-size: 18px;"></i><br>
+              <span th:if="${username != null}" >Hi [[${username}]] !</span>
+            </div>
+            <div class="col-3 text-center"  id="logoutAccount" th:if="${username != null}">
+              <i class="fa fa-sign-out pt-3" aria-hidden="true" style="font-size: 18px;"></i><br>
+              <span th:if="${username != null}">Log out</span>
             </div>
           </div>
         </div>
@@ -53,9 +57,9 @@
           <li class="nav-item dropdown" style="padding-left: 50px;">
             <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">  Samsung  </a>
               <ul class="dropdown-menu fade-up">
-                  <li><a class="dropdown-item" href="#"> Galaxy Z Series</a></li>
-                  <li><a class="dropdown-item" href="#"> Galaxy S Series </a></li>
-                  <li><a class="dropdown-item" href="#"> Galaxy A Series </a></li>
+                  <li><a class="dropdown-item" href="/user/searchBySeries/galaxyz"> Galaxy Z Series</a></li>
+                  <li><a class="dropdown-item" href="/user/searchBySeries/galaxys"> Galaxy S Series </a></li>
+                  <li><a class="dropdown-item" href="/user/searchBySeries/galaxya"> Galaxy A Series </a></li>
               </ul>
           </li>
           <li class="nav-item dropdown" style="padding-left: 50px;">
@@ -111,41 +115,47 @@
 
   <div class="mt-3  d-flex justify-content-center ">
       <div class="row container-fluid" style="width: 1250px;">
-        <div class="col-3 bg-danger">
+          <div class="col-3 mt-3 phoneItem" style="background-color:#c8d0cf;border:2px solid #c8d0cf;"  th:each="edi : ${editionList}">
           <div class=" d-flex justify-content-center">
-            <img src="iphone14promax.png" width="250" height="250" style="border-radius: 10px; margin-top: 15px;">
+            <img id="phonePicture" th:src="@{${'/uploads/' + edi.telephone.pictureUrl}}" th:attr="onclick=|phoneDetail('*{edi.id}')|"  width="250" height="250" style="border-radius: 10px; margin-top: 15px;">
           </div>
-          <div>
-            <span style="padding-left: 11px;font-weight:bold; font-size: 18px;">Iphone 14 Pro Max 128GB</span>
+          <div class="row d-flex justify-content-center mt-2">
+            <span class="col-12 text-center"  style="font-weight:bold; font-size: 16px;">[[*{edi.telephone.name}]]  [[*{edi.capacity}]]GB</span>
           </div>
-          <div id="ip14promax" class="row d-flex justify-content-center bg-success" style="width: 250px; margin-left: 11px;">
-              <button class="col-4 btn btn-dark" type="button"  style="padding: 0px;"> 128GB </button>  
-              <button class="col-4 btn btn-secondary" type="button"  style="padding: 0px;"> 256GB </button>  
-              <button class="col-4 btn btn-secondary" type="button"  style="padding: 0px;"> 512GB </button>  
+          <div id="" class="row d-flex justify-content-center" style="width: 250px; margin-left: 11px;">
+              <span class="col-12 text-center"   style="font-weight:bold; font-size: 14px; color:#cb1c22"> <del>  [[${#numbers.formatDecimal(edi.price, 0, 'COMMA', 0, 'POINT')}]] VND</del></span>  
           </div>
-
-          <div class="mt-4">
-            thong tin detail
+          <div id="" class="row d-flex justify-content-center" style="width: 250px; margin-left: 11px;">
+              <span class="col-12 text-center"   style="font-weight:bold; font-size: 22px; color:#cb1c22">[[${#numbers.formatDecimal(edi.price -edi.discount, 0, 'COMMA', 0, 'POINT')}]] VND</span>  
           </div>
-
-        </div>
-
-
-        <div class="col-3 bg-success"></div>
-        <div class="col-3 bg-warning"></div>
-        <div class="col-3 bg-success"></div>
-        
-        
+          <div id="ip14promax" class="row d-flex justify-content-center mt-2 mb-1" style="width: 250px; height: 35px ; margin-left: 10px;">
+              <button class="col-4 pl-2 btn btn-danger" type="button" th:attr="onclick=|phoneDetail('*{edi.id}')|" style="padding: 0px;width: 120px;"> BUY NOW </button>  
+              <button class="col-4 btn btn-secondary" type="button" th:attr="onclick=|phoneDetail('*{edi.id}')|" style="width: 120px;margin-left:5px"> DETAIL </button>  
+          </div>
+          </div>
       </div>
+      
+      <div>
+	 	<div class="heightCut" style="height:30px"> </div>
+  	  </div>
   </div>
+  
 
 </div>
 
 
 <script>
+  
+  function phoneDetail(editionId){
+	window.location.href = "/user/phoneDetail/" +editionId;
+  }
   $(document).ready(function () {
     $('#cart').click(function(){
     	window.location.href = "/cart/orders";
+    });
+    
+    $('#logoutAccount').click(function(){
+    	window.location.href = "/logout" ;
     });
     
     $('#searchByNameBtn').click(function(){
@@ -165,6 +175,16 @@
         }
       })
     });
+    
+    $('.phoneItem').hover(function(){
+		$(this).find('img').css("transform", "scale(1.04, 1.04)").css('transition-delay', '0.02s') ;
+	   $(this).css("border","2px solid #cb1c22");
+			$(this).find('.heightCut').css("height", "4px") ;
+	}, function(){
+		$(this).find('img').css("transform", "none");
+		$(this).css("border","2px solid #c8d0cf");
+// 		$(this).find('.heightCut').css("height", "5px") ;
+	});
 
     
   })

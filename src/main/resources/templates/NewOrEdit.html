@@ -21,6 +21,8 @@
 		<h1>New Or Edit Phone</h1>
 	</div>	
 	<hr />
+		<a style="color:#02f4f2;margin-left:10px;" th:href="@{/admin/backhome}">Back Home</a>
+	<hr />
 	<br></br>
 	<form th:action="@{/admin/manage/products/newOrEdit}" method="post" th:object="${telephone}" enctype="multipart/form-data">
 	  <div class="form-group row">
