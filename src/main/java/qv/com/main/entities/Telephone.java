@@ -15,6 +15,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
@@ -70,18 +71,14 @@ public class Telephone {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy ="telephone", cascade =CascadeType.ALL)
 	private List<Edition> editions;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "brand_id", referencedColumnName = "id")
-    private Brand brand;
+	@ManyToOne(fetch = FetchType.EAGER, cascade =CascadeType.ALL)
+	@JoinColumn(name = "id")
+	private Brand brand;
 	
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "detail_id", referencedColumnName = "id")
     private Detail detail;
-	
-	public void addBrandForTelephone(String brand) {
-		this.setBrand(new Brand(brand, this));
-	}
 	
 	public void addDetailForTelephone(String information) {
 		this.setDetail(new Detail(information,this));

@@ -35,12 +35,17 @@ public class UserSearchPhoneBySeries {
 		List<Telephone> listProducts = telephoneService.findBySeries(series.get());
         model.addAttribute("telephones", listProducts);
         
-        User userNew = userService.findById(username).get();
-        if(userNew.getProductcart() != null) {
-    		model.addAttribute("orderNumber", userNew.getProductcart().getOrders().size());
+        if(username != null) {
+        	User userNew = userService.findById(username).get();
+        	
+    		if(userNew.getProductcart() != null) {
+        		model.addAttribute("orderNumber", userNew.getProductcart().getOrders().size());
+            }
+        }else {
+        	model.addAttribute("message", "You need login first!");
+        	return "forward:/";
         }
-
-         
+        
         return "ListProductsBySeries";
 	}
 	
@@ -52,9 +57,15 @@ public class UserSearchPhoneBySeries {
 		List<Telephone> listProducts = telephoneService.findByNameLike(name);
         model.addAttribute("telephones", listProducts);
         
-        User userNew = userService.findById(username).get();
-        if(userNew.getProductcart() != null) {
-    		model.addAttribute("orderNumber", userNew.getProductcart().getOrders().size());
+        if(username != null) {
+        	User userNew = userService.findById(username).get();
+        	
+    		if(userNew.getProductcart() != null) {
+        		model.addAttribute("orderNumber", userNew.getProductcart().getOrders().size());
+            }
+        }else {
+        	model.addAttribute("message", "You need login first!");
+        	return "forward:/";
         }
 
         return "ListProductsBySeries";

@@ -45,6 +45,8 @@ public class AdminLoginController {
 		model.remove("username");
 		model.clear();
 		
+		session.removeAttribute("username");
+		
 		return "redirect:/";
 	}
 	

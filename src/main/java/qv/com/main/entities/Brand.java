@@ -1,13 +1,17 @@
 package qv.com.main.entities;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.Length;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
@@ -25,17 +29,11 @@ public class Brand {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(columnDefinition = "nvarchar(250)")
+	@Column(columnDefinition = "nvarchar(250) unique")
 	private String brand;
 	
-	@OneToOne(mappedBy = "brand",cascade = CascadeType.ALL)
-    private Telephone telephone;
+	@OneToMany(mappedBy = "brand",fetch = FetchType.EAGER)
+	private List<Telephone> telephones;
 
-	public Brand(String brand, Telephone telephone) {
-		this.brand = brand;
-		this.telephone = telephone;
-	}
-	
-	
 	
 }

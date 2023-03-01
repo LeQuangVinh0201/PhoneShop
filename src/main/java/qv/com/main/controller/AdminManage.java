@@ -36,12 +36,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import qv.com.main.entities.Brand;
 import qv.com.main.entities.Edition;
 import qv.com.main.entities.Revenue;
 import qv.com.main.entities.Telephone;
 import qv.com.main.entities.User;
 import qv.com.main.model.AdminLoginDto;
 import qv.com.main.model.ExcelGenerator;
+import qv.com.main.service.BrandService;
 import qv.com.main.service.RevenueService;
 import qv.com.main.service.TelephoneService;
 import qv.com.main.service.UserService;
@@ -58,6 +60,9 @@ public class AdminManage {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	BrandService brandService;
 	
 	@Autowired
 	HttpSession session;
@@ -132,6 +137,13 @@ public class AdminManage {
 				}
 			}
 			
+			//check brand exist
+			String name = telephone.getBrand().getBrand();
+			Brand brand = brandService.findByBrand(name);
+			if(brand != null) {
+				telephone.setBrand(brand);
+			}
+			
 			for (int i = 0; i < telephone.getEditions().size(); i++) {
 				telephone.getEditions().get(i).setTelephone(telephone);
 		    }
@@ -150,6 +162,12 @@ public class AdminManage {
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
+			}
+			
+			//check brand exist
+			Brand brand = brandService.findByBrand(telephone.getBrand().getBrand());
+			if(brand != null) {
+				telephone.setBrand(brand);
 			}
 			
 			List<Edition> newList = telephone.getEditions();

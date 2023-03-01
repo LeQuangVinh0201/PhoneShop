@@ -14,11 +14,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.stereotype.Repository;
 
+import qv.com.main.entities.Brand;
 import qv.com.main.entities.Telephone;
 
 @Repository
 public interface TelephoneRepository extends JpaRepository<Telephone, String>{
-
+	
 	void deleteAll();
 
 	<S extends Telephone> List<S> findAll(Example<S> example, Sort sort);
@@ -82,6 +83,8 @@ public interface TelephoneRepository extends JpaRepository<Telephone, String>{
 	<S extends Telephone> S save(S entity);
 	
 	List<Telephone> findBySeries(String series);
+	
+	List<Telephone> findByBrand(Brand brand);
 	
 	@Query("Select t from Telephone t where t.name LIKE  %?1%")
 	List<Telephone> findByNameLike(String name);

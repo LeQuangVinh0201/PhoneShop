@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.stereotype.Service;
 
+import qv.com.main.entities.Brand;
 import qv.com.main.entities.Telephone;
 import qv.com.main.repo.TelephoneRepository;
 
@@ -21,8 +22,6 @@ public class TelephoneService implements TelephoneRepository{
 	@Autowired
 	TelephoneRepository telephoneRepository;
 	
-	
-	
 	public List<Telephone> findByNameLike(String name) {
 		return telephoneRepository.findByNameLike(name);
 	}
@@ -30,6 +29,10 @@ public class TelephoneService implements TelephoneRepository{
 	@Override
 	public <S extends Telephone> S save(S entity) {
 		return telephoneRepository.save(entity);
+	}
+
+	public List<Telephone> findByBrand(Brand brand) {
+		return telephoneRepository.findByBrand(brand);
 	}
 
 	@Override
