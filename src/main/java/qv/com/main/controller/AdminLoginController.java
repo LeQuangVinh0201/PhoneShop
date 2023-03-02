@@ -72,7 +72,6 @@ public class AdminLoginController {
 			session.setAttribute("orderNumber", "0");
 		}
 
-		
 		Object ruri = session.getAttribute("redirect-uri");
 		
 		//authorized only admin can access some pages

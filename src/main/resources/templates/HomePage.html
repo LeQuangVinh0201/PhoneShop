@@ -182,6 +182,24 @@
 	 	<div class="heightCut" style="height:30px"> </div>
   	  </div>
    </div>
+   
+   <!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Notification</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+		        <span style="color:red;">You need to log in first! <i class="fa fa-smile-o" aria-hidden="true" style="font-size: 18px;color:red;"></i></span>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 	 	
 
 </div>
@@ -194,12 +212,18 @@
   }
 
   $(document).ready(function () {
-    $('#iphone14, #cart').click(function(){
-      alert("hello");
-    });
     
     $('#personAccount').click(function(){
     	window.location.href = "/alogin";
+    });
+    
+    $('#cart').click(function(e){
+		if($('#userName').length == 0 ){
+			$('#exampleModal').modal('toggle');
+			return false;
+		}else{
+	    	window.location.href = "/cart/orders";
+		}
     });
     
     $('#ip14promax button[type=button]').click(function(e){
@@ -225,6 +249,10 @@
 		$(this).css("border","2px solid #c8d0cf");
 // 		$(this).find('.heightCut').css("height", "5px") ;
 	});
+    
+    $('#personAccount').click(function(){
+    	window.location.href = "/alogin";
+    });
 
     
   })

@@ -31,7 +31,7 @@
             </div>
             <div class="col-5 text-center"  id="personAccount">
               <i class="fa fa-user pt-3" aria-hidden="true" style="font-size: 18px;"></i><br>
-              <span th:if="${username != null}" >Hi [[${username}]] !</span>
+              <span th:if="${username != null}" id="userName">Hi [[${username}]] !</span>
             </div>
             <div class="col-3 text-center"  id="logoutAccount" th:if="${username != null}">
               <i class="fa fa-sign-out pt-3" aria-hidden="true" style="font-size: 18px;"></i><br>

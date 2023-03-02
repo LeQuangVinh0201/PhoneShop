@@ -52,8 +52,7 @@ public class Edition {
 	@Column
 	private Long discount;
 	
+	@Column(nullable = false)
+	private Integer storage;
 	
-	
-//	@OneToOne(mappedBy = "edition",cascade = CascadeType.ALL)
-//    private Comment comment;
 }

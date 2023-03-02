@@ -32,15 +32,16 @@
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-user"></i></span>
 						</div>
-						<input type="text" class="form-control" placeholder="userName" th:field="*{userName}">
-						
+						<input type="text" class="form-control" placeholder="userName" th:field="*{userName}" required>
 					</div>
+					<div th:if="${#fields.hasErrors('userName')}" class="text-white mb-2">UserName is invalid </div>
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-key"></i></span>
 						</div>
-						<input type="password" class="form-control" placeholder="password" th:field="*{password}">
+						<input type="password" class="form-control" placeholder="password" th:field="*{password}" required>
 					</div>
+					<div th:if="${#fields.hasErrors('*{password}')}" class="text-white mb-2">Password is invalid </div>
 					<div class="form-group">
 						<input type="submit" value="Register" class="btn float-right login_btn">
 					</div>

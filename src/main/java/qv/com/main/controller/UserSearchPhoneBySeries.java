@@ -41,9 +41,6 @@ public class UserSearchPhoneBySeries {
     		if(userNew.getProductcart() != null) {
         		model.addAttribute("orderNumber", userNew.getProductcart().getOrders().size());
             }
-        }else {
-        	model.addAttribute("message", "You need login first!");
-        	return "forward:/";
         }
         
         return "ListProductsBySeries";

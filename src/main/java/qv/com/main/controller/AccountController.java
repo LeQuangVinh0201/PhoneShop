@@ -41,7 +41,7 @@ public class AccountController {
 		user.setRole("User");
 		userService.save(user);
 		
-		model.addAttribute("message", "User is saved");
+//		model.addAttribute("message", "User is saved");
 		
 		return new ModelAndView("HomePage", model);
 	}

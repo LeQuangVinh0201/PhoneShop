@@ -85,7 +85,7 @@ public interface RevenueRopository extends JpaRepository<Revenue, Integer>{
 	@Query("Select r from Revenue r where ?1 <= r.selldate And r.selldate <= ?2")
 	List<Revenue> findByStartEndDate(Date startDate, Date endDate);
 	
-	@Query(nativeQuery=true, value="select top(2) edition_id,SUM(quantity) quantity from revenue group by edition_id ORDER BY quantity DESC")
+	@Query(nativeQuery=true, value="select top(4) edition_id,SUM(quantity) quantity from revenue group by edition_id ORDER BY quantity DESC")
 	List<Integer> findEditionBestSale();
 
 }

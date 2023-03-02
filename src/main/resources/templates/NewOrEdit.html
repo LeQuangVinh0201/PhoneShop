@@ -29,7 +29,7 @@
 	    <label for="masp" class="col-2 col-form-label">Product ID:</label>
 	    <div class="col-3">
 	      <input th:if="${telephone.masp != null}" readonly type="text" th:field="*{masp}" class="form-control" />
-	      <input th:if="${telephone.masp == null}"  type="text" th:field="*{masp}" class="form-control" />
+	      <input th:if="${telephone.masp == null}"  type="text" th:field="*{masp}" class="form-control" required/>
 	      <input type="hidden" th:field="*{createdAt}" class="form-control"/>
 	      <input type="hidden" th:field="*{createdBy}" class="form-control"/>
 		  <p style="color:red;" th:if="${#fields.hasErrors('masp')}" th:errors="*{masp}" th:class="error" ></p>
@@ -38,14 +38,14 @@
 	  <div class="form-group row">
 	    <label for="name" class="col-2 col-form-label">Name :</label>
 	    <div class="col-3">
-	      <input type="text" class="form-control" th:field="*{name}"/>
+	      <input type="text" class="form-control" th:field="*{name}" required/>
 		  <p style="color:red;" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:class="error" ></p>
 	    </div>
 	  </div>
 	  <div class="form-group row">
 	    <label  for="pictureUrl" class="col-2 col-form-label">Picture Url :</label>
 	    <div class="col-3" id="picture">
-	      <input th:if="${telephone.masp == null}" type="file" class="form-control"  name="pictureUrl"/>
+	      <input th:if="${telephone.masp == null}" type="file" class="form-control"  name="pictureUrl" required/>
 	      <input th:if="${telephone.masp != null}" type="text" class="form-control" id="staticUrl"  name="pictureUrl" th:field="*{pictureUrl}" readonly/>
 	      <input style="width :20%" th:if="${telephone.masp != null}" type="button" class="form-control" id="editPicture" value="Edit" />
 		  <p style="color:red;" th:if="${#fields.hasErrors('pictureUrl')}" th:errors="*{pictureUrl}" th:class="error" ></p>
@@ -54,14 +54,14 @@
 	  <div class="form-group row">
 	    <label for="series" class="col-2 col-form-label">Series :</label>
 	    <div class="col-3">
-	      <input type="text" class="form-control"  th:field="*{series}" />
+	      <input type="text" class="form-control"  th:field="*{series}" required/>
 		  <p style="color:red;" th:if="${#fields.hasErrors('series')}" th:errors="*{series}" th:class="error" ></p>
 	    </div>
 	  </div>
 	  <div class="form-group row">
 	    <label for="information" class="col-2 col-form-label">Information :</label>
 	    <div class="col-3">
-	      <pre><textarea rows="7" class="form-control"  name="information" th:field="*{detail.information}"></textarea></pre>
+	      <pre><textarea rows="7" class="form-control"  name="information" th:field="*{detail.information}" required></textarea></pre>
 	      <input type="hidden" class="form-control"  name="id" th:field="*{detail.id}"/>
 	    </div>
 	  </div>
@@ -77,21 +77,21 @@
 	  <div class="form-row" style="margin-left:183px" th:each="item, itemStat : *{editions}">
 		  <div class="form-group col-2">
 		      <label for="capacity">Capacity (GB)</label>
-		      <input type="text" readonly class="form-control" th:field="*{editions[__${itemStat.index}__].capacity}"   name="capacity">
+		      <input type="text" readonly class="form-control" th:field="*{editions[__${itemStat.index}__].capacity}"   name="capacity" required>
 		      <input type="hidden" class="form-control" th:field="*{editions[__${itemStat.index}__].id}"   name="id" >
 		    </div>
 		    <div class="form-group col-2">
 		      <label for="price">Price</label>
-		      <input type="text" class="form-control" th:field="*{editions[__${itemStat.index}__].price}"  name="price">
+		      <input type="text" class="form-control" th:field="*{editions[__${itemStat.index}__].price}"  name="price" required>
 		    </div>
 		    <div class="form-group col-2">
 		      <label for="discount">Discount</label>
-		      <input type="text" class="form-control" th:field="*{editions[__${itemStat.index}__].discount}" name="discount" >
+		      <input type="text" class="form-control" th:field="*{editions[__${itemStat.index}__].discount}" name="discount" required>
 		    </div>
-<!-- 		    <div class="form-group col-2"> -->
-<!-- 		      <label for="storage">Storage</label> -->
-<!-- 		      <input type="text" class="form-control" th:field="*{editions[__${itemStat.index}__].storage}" name="storage" > -->
-<!-- 		    </div> -->
+		    <div class="form-group col-2">
+		      <label for="storage">Storage</label>
+		      <input type="text" class="form-control" th:field="*{editions[__${itemStat.index}__].storage}" name="storage" >
+		    </div>
 <!-- 		    <div class="form-group col-2"> -->
 <!-- 		      <label for="storage">Saled</label> -->
 <!-- 		      <input type="text" class="form-control" th:field="*{editions[__${itemStat.index}__].saled}" name="saled" > -->

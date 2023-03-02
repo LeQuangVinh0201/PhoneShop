@@ -115,10 +115,7 @@ public class AdminManage {
 	@PostMapping("/manage/products/newOrEdit")
 	public String saveOrUpdate(ModelMap model,@Valid Telephone telephone,BindingResult result, HttpServletRequest request,
 			@RequestParam(name="pictureUrl", required = false) MultipartFile photo ) {
-//		if(result.hasErrors()) {
-//			model.addAttribute("account", new AdminLoginDto());
-//			return "LoginPage";
-//		}
+		
 		String username = (String) session.getAttribute("username");
 		Optional<Telephone> existOrNot = telephoneService.findById(telephone.getMasp());
 		

@@ -50,6 +50,10 @@ public class HomeController {
     		model.addAttribute("orderNumber", userNew.getProductcart().getOrders().size());
         }
 		
+		List<Integer> editionIdList = revenueService.findEditionBestSale();
+		List<Edition> editionList = editionService.findAllById(editionIdList);
+		model.addAttribute("editionList", editionList);
+		
 		return "HomePageLogined";
 	}
 	
@@ -59,12 +63,6 @@ public class HomeController {
 		model.addAttribute("username", username);
 		return "AdminHomePage";
 	}
-	
-	
-//	@RequestMapping("/Login")
-//	public String Login() {
-//		return "LoginPage";
-//	}
 	
 	@RequestMapping("/Register")
 	public String Register(Model model) {

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.HttpSession;
+import qv.com.main.entities.Edition;
 import qv.com.main.entities.Orders;
 import qv.com.main.entities.Revenue;
 import qv.com.main.entities.Telephone;
@@ -93,6 +94,11 @@ public class MailController {
 			rev.setTotal((orderList.get(i).getEdition().getPrice() - orderList.get(i).getEdition().getDiscount())* orderList.get(i).getQuantity());
 			rev.setSelldate(new Date());
 			revenueList.add(rev);
+			
+			//update storage of Edition
+			Edition edi = editionService.findById(orderList.get(i).getEdition().getId()).get();
+			edi.setStorage( edi.getStorage() - orderList.get(i).getQuantity());
+			editionService.save(edi);
 		}
 		
 		revenueService.saveAll(revenueList);

@@ -36,7 +36,8 @@ html,body {
             </div>
             <div class="col-5 text-center"  id="personAccount">
               <i class="fa fa-user pt-3" aria-hidden="true" style="font-size: 18px;"></i><br>
-              <span th:if="${username != null}" >Hi [[${username}]] !</span>
+              <span th:if="${username != null}" id="userName">Hi [[${username}]] !</span>
+              <span th:unless="${username != null}" >Login</span>
             </div>
             <div class="col-3 text-center"  id="logoutAccount" th:if="${username != null}">
               <i class="fa fa-sign-out pt-3" aria-hidden="true" style="font-size: 18px;"></i><br>
@@ -187,7 +188,8 @@ html,body {
               <span class="col-12 text-center"   style="font-weight:bold; font-size: 22px; color:#cb1c22">[[${#numbers.formatDecimal(edi.price -edi.discount, 0, 'COMMA', 0, 'POINT')}]] VND</span>  
           </div>
           <div id="ip14promax" class="row d-flex justify-content-left mt-2 mb-1" style="width: 250px; height: 35px ; margin-left: 0px;">
-              <button class="col-4 btn btn-danger" type="button" th:attr="onclick=|phoneDetail('*{edi.id}')|" style="padding: 0px;width: 120px;"> BUY NOW </button>  
+          	  <button th:if="*{edi.storage > 0}" class="col-4 btn btn-danger" type="button" th:attr="onclick=|phoneDetail('*{edi.id}')|" style="padding: 0px;width: 120px;"> BUY NOW </button>  
+              <button th:unless="*{edi.storage > 0}" class="col-4 btn btn-secondary" type="button" th:attr="onclick=|phoneDetail('*{edi.id}')|" style="padding: 0px;width: 120px;"> SOLD OUT </button>
               <button class="col-4 btn btn-secondary" type="button" th:attr="onclick=|phoneDetail('*{edi.id}')|" style="width: 120px;margin-left:5px"> DETAIL </button>  
           </div>
 
@@ -201,6 +203,24 @@ html,body {
       
   <div style="height:50px">
   </div>
+  
+  <!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Notification</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	      	<span style="color:red;">You need to log in first! <i class="fa fa-smile-o" aria-hidden="true" style="font-size: 18px;color:red;"></i></span>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
 </div>
 
@@ -211,8 +231,13 @@ html,body {
   }
   
   $(document).ready(function () {
-	$('#cart').click(function(){
-    	window.location.href = "/cart/orders";
+  	$('#cart').click(function(e){
+		if($('#userName').length == 0 ){
+			$('#exampleModal').modal('toggle');
+			return false;
+		}else{
+	    	window.location.href = "/cart/orders";
+		}
     });
 	
 	$('#logoutAccount').click(function(){
@@ -235,6 +260,10 @@ html,body {
     
     $('#logoQV').click(function(e){
     	window.location.href = "/loginSuccess";
+    });
+    
+    $('#personAccount').click(function(){
+    	window.location.href = "/alogin";
     });
 
     

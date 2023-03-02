@@ -50,9 +50,6 @@ public class UserSearchPhoneByBrand {
     		if(userNew.getProductcart() != null) {
         		model.addAttribute("orderNumber", userNew.getProductcart().getOrders().size());
             }
-        }else {
-        	model.addAttribute("message", "You need login first!");
-        	return "forward:/";
         }
         
         return "ListProductsByBrand";
@@ -88,9 +85,6 @@ public class UserSearchPhoneByBrand {
     		if(userNew.getProductcart() != null) {
         		model.addAttribute("orderNumber", userNew.getProductcart().getOrders().size());
             }
-        }else {
-        	model.addAttribute("message", "You need login first!");
-        	return "forward:/";
         }
         
         return "ListProductsByBrandSort";
@@ -126,9 +120,6 @@ public class UserSearchPhoneByBrand {
     		if(userNew.getProductcart() != null) {
         		model.addAttribute("orderNumber", userNew.getProductcart().getOrders().size());
             }
-        }else {
-        	model.addAttribute("message", "You need login first!");
-        	return "forward:/";
         }
         
         return "ListProductsByBrandSort";

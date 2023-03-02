@@ -49,6 +49,17 @@ public class CartController {
 	@GetMapping("/orders/{editionId}")
 	public String listProducts(Model model, @PathVariable(name="editionId") Optional<Integer> editionId) {
 		String username = (String) session.getAttribute("username");
+		
+		if(username != null) {
+			User userNew = userService.findById(username).get();
+        	
+    		if(userNew.getProductcart() != null) {
+        		model.addAttribute("orderNumber", userNew.getProductcart().getOrders().size());
+            }
+        }else {
+        	model.addAttribute("message", "You need login first!");
+        	return "forward:/";
+        }
 		model.addAttribute("username", username);
 		
         User user = userService.findById(username).get();
@@ -106,8 +117,17 @@ public class CartController {
          
 		model.addAttribute("productcarts", user.getProductcart());
 		
-		User userNew = userService.findById(username).get();
-		model.addAttribute("orderNumber", userNew.getProductcart().getOrders().size());
+		if(username != null) {
+			User userNew = userService.findById(username).get();
+        	
+    		if(userNew.getProductcart() != null) {
+        		model.addAttribute("orderNumber", userNew.getProductcart().getOrders().size());
+            }
+        }
+//		else {
+//        	model.addAttribute("message", "You need login first!");
+//        	return "forward:/";
+//        }
 		
         return "CartsDetail";
 	}
@@ -135,16 +155,18 @@ public class CartController {
 		model.addAttribute("oriPrice", oriPrice);
 		model.addAttribute("sale", sale);
 		model.addAttribute("finalPrice", finalPrice);
-         
-		model.addAttribute("productcarts", user.getProductcart());
 		
+		if(user.getProductcart() != null) {
+			model.addAttribute("productcarts", user.getProductcart());
+		}
+         
 		User userNew = userService.findById(username).get();
 		if(userNew.getProductcart() != null) {
     		model.addAttribute("orderNumber", userNew.getProductcart().getOrders().size());
             return "CartsDetail";
         }
 		
-        return "redirect:/loginSuccess";
+        return "CartsDetail";
 	}
 	
 	@GetMapping("/orders/plusAction/{orderId}")
@@ -173,13 +195,9 @@ public class CartController {
 		User user = userService.findById(username).get();
 		Orders order = ordersService.findById(orderId.get());
 		
-//	ordersService.delete(order);
-		
 		ProductCart cart = cartService.findById(order.getProductcart().getId()).get();
 		cart.removeOrder(order);
 		cartService.save(cart);
-		
-
 		
         return "redirect:/cart/orders";
 	}
