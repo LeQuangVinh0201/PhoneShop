@@ -1,6 +1,8 @@
 package qv.com.main.controller;
 
 
+import java.util.Optional;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,6 +38,15 @@ public class AccountController {
 		if(result.hasErrors()) {
 			return new ModelAndView("HomePage");
 		}
+		Optional<User> userExisted = userService.findById(dto.getUserName());
+		
+		if(userExisted.isPresent()) {
+			model.addAttribute("account", userExisted); 
+			model.addAttribute("errorMessage", "This username has already existed!");
+			
+			return new ModelAndView("RegisterPage", model);
+		}
+		
 		User user = new  User();
 		BeanUtils.copyProperties(dto, user);
 		user.setRole("User");

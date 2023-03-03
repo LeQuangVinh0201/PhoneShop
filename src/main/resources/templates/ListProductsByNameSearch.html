@@ -154,22 +154,6 @@ html,body {
       </div> 
      </nav>
   </div>
-  
-    
-  <div class="container-fluid mt-3 d-flex justify-content-end" style="width:78%;height:30px;">
-  	<nav class="navbar navbar-expand-lg navbar-dark p-1" style ="background-color:#00483d; border-radius:5px;margin-right:10px;">
-  		<ul class="navbar-nav">
-  			<li class="nav-item dropdown" >
-            <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">  Sắp xếp theo  </a>
-              <ul class="dropdown-menu fade-up">
-                  <li><a class="dropdown-item"  th:href="@{'/user/searchByBrand/desc/' + ${brandItem}}"> Giá từ cao đến thấp</a></li>
-                  <li><a class="dropdown-item" th:href="@{'/user/searchByBrand/asc/' + ${brandItem}}"> Giá từ thấp đến cao</a></li>
-              </ul>
-          </li>
-  		</ul>
-  	</nav>	
-  </div>
-  
 
   <!-- display phones -->
   <div class="mt-1 d-flex justify-content-center " th:each="item : ${telephones}">
@@ -188,8 +172,8 @@ html,body {
               <span class="col-12 text-center"   style="font-weight:bold; font-size: 22px; color:#cb1c22">[[${#numbers.formatDecimal(edi.price -edi.discount, 0, 'COMMA', 0, 'POINT')}]] VND</span>  
           </div>
           <div id="ip14promax" class="row d-flex justify-content-left mt-2 mb-1" style="width: 250px; height: 35px ; margin-left: 0px;">
-              <button th:if="*{edi.storage > 0}" class="col-4 btn btn-danger" type="button" th:attr="onclick=|phoneDetail('*{edi.id}')|" style="padding: 0px;width: 120px;"> BUY NOW </button>  
-              <button th:unless="*{edi.storage > 0}" class="col-4 btn btn-secondary" type="button" th:attr="onclick=|phoneDetail('*{edi.id}')|" style="padding: 0px;width: 120px;"> SOLD OUT </button>  
+          	  <button th:if="*{edi.storage > 0}" class="col-4 btn btn-danger" type="button" th:attr="onclick=|phoneDetail('*{edi.id}')|" style="padding: 0px;width: 120px;"> BUY NOW </button>  
+              <button th:unless="*{edi.storage > 0}" class="col-4 btn btn-secondary" type="button" th:attr="onclick=|phoneDetail('*{edi.id}')|" style="padding: 0px;width: 120px;"> SOLD OUT </button>
               <button class="col-4 btn btn-secondary" type="button" th:attr="onclick=|phoneDetail('*{edi.id}')|" style="width: 120px;margin-left:5px"> DETAIL </button>  
           </div>
 
@@ -197,6 +181,11 @@ html,body {
         </div>
 	      <div class="heightCut" style="height:5px">
 	  	</div>
+        
+        
+<!--         <div class="col-3 bg-success"></div> -->
+<!--         <div class="col-3 bg-warning"></div> -->
+<!--         <div class="col-3 bg-success"></div> -->
       </div>
       
       
@@ -230,7 +219,7 @@ html,body {
   }
   
   $(document).ready(function () {
-  	$('#cart').click(function(e){
+    $('#cart').click(function(e){
 		if($('#userName').length == 0 ){
 			$('#exampleModal').modal('toggle');
 			return false;
@@ -266,7 +255,7 @@ html,body {
     $('#logoQV').click(function(e){
     	window.location.href = "/loginSuccess";
     });
-    
+	
     $('#personAccount').click(function(){
     	window.location.href = "/alogin";
     });

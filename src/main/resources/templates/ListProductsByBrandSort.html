@@ -247,6 +247,12 @@ html,body {
 	$('#searchByNameBtn').click(function(){
     	window.location.href = "/user/findByName/" + $("#nameSearch").val();
     });
+	
+	$(document).on('keypress',function(e) {
+        if(e.which == 13) {
+            $('#searchByNameBtn').trigger('click');
+        }
+    })
     
     $('.phoneItem').hover(function(){
     		$(this).find('img').css("transform", "scale(1.04, 1.04)").css('transition-delay', '0.02s') ;

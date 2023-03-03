@@ -19,8 +19,8 @@
           <img src="/LogoImage/logo.png"  width="100" height="70" >
         </div>
         <div class="col-7 d-flex justify-content-center">
-          <input type="text" placeholder=" Please enter product's name to search" style="width: 70%; height: 50%;margin-top: 20px; border-radius: 10px;">
-          <button type="button" class="btn btn-danger" style="width:50px ; height: 50%;margin-top: 20px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+          <input type="text" id ="nameSearch" placeholder=" Please enter product's name to search" style="width: 70%; height: 50%;margin-top: 20px; border-radius: 10px;">
+          <button type="button" id="searchByNameBtn" class="btn btn-danger" style="width:50px ; height: 50%;margin-top: 20px;"><i class="fa fa-search" aria-hidden="true"></i></button>
         </div>
         <div class="col-3 d-flex justify-content-center">
           <div class="row container ">
@@ -253,7 +253,16 @@
     $('#personAccount').click(function(){
     	window.location.href = "/alogin";
     });
-
+    
+    $('#searchByNameBtn').click(function(){
+    	window.location.href = "/user/findByName/" + $("#nameSearch").val();
+    });
+	
+    $(document).on('keypress',function(e) {
+        if(e.which == 13) {
+            $('#searchByNameBtn').trigger('click');
+        }
+    });
     
   })
 

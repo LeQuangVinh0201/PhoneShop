@@ -175,13 +175,29 @@ html,body {
 	        <div class="col-3">
 	        	<div class="row d-flex justify-content-center " style="margin-top:110px;">
 					<button style="width:40px; height:40px;" th:attr="onclick=|subAction('${order.id}')|" th:disabled="${order.quantity == 1}"><i class="fa fa-minus" aria-hidden="true"></i></button>	
-					<input class="text-center quantityItemNumber" style="width:40px; height:40px; border:1px solid black; font-size:18px; font-weight:bold;" th:value="${order.quantity}" id="currentQuantity" readonly/>
-					<button type="button" style="width:40px; height:40px;" th:attr="onclick=|plusAction('${order.id}')|" ><i class="fa fa-plus" aria-hidden="true"></i></button>
-					<input type="hidden" th:value="*{order.edition.storage}" id="storage"/>
+					<input class="text-center quantityItemNumber" style="width:40px; height:40px; border:1px solid black; font-size:18px; font-weight:bold;" th:value="${order.quantity}"  readonly/>
+					<button type="button" style="width:40px; height:40px;" th:attr="onclick=|plusAction(${order.quantity},${order.edition.storage},'${order.id}')|" ><i class="fa fa-plus" aria-hidden="true"></i></button>
+					<input type="hidden" th:value="*{order.edition.storage}" />
 	        	</div>	
 	        	<div class="row mt-1 d-flex justify-content-center">
 	        		<button style="width:40px; height:40px;" th:attr="onclick=|deleteAction('${order.id}')|"><i style="font-size:20px;margin-left:-2px;" class="fa fa-trash-o" aria-hidden="true"></i> </button>
-	        	</div>	
+	        	</div>
+	        	<!-- Modal -->
+				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">Notification</h5>
+				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				      </div>
+				      <div class="modal-body" id="modalContent">
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>	
 	        </div>
 	        
 	        <div class="col-4">
@@ -193,23 +209,6 @@ html,body {
 	        	</div>	
 	        </div>
 	        
-	        <!-- Modal -->
-			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			  <div class="modal-dialog">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalLabel">Notification</h5>
-			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			      </div>
-			      <div class="modal-body">
-			      	<span style="color:red;">We only have [[${order.quantity}]] phone left! <i class="fa fa-smile-o" aria-hidden="true" style="font-size: 18px;color:red;"></i></span>
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-			      </div>
-			    </div>
-			  </div>
-			</div>
 	      </div>
 	      <!--total amount -->
 		  <div class="row  p-2 d-flex justify-content-end" style="border-top: 2px solid #476e5d">
@@ -269,9 +268,10 @@ html,body {
 		window.location.href = "/user/phoneDetail/" +editionId;
   }
   
-  function plusAction(orderId){
-	  debugger
-	  if( (Number($('#currentQuantity').val()) + 1) > Number($('#storage').val())){
+  function plusAction(quantityItemNumber,storage,orderId){
+	  if( (quantityItemNumber + 1) > storage){
+		  $('#modalContent').empty();
+		  $('#modalContent').append('<span style="color:red;">We only have '+ storage +' phone(s) left! <i class="fa fa-smile-o" aria-hidden="true" style="font-size: 18px;color:red;"></i></span>');
 		  $('#exampleModal').modal('toggle');
 		  return false;
 	  }
@@ -322,6 +322,12 @@ html,body {
     $('#searchByNameBtn').click(function(){
     	window.location.href = "/user/findByName/" + $("#nameSearch").val();
     });
+    
+    $(document).on('keypress',function(e) {
+        if(e.which == 13) {
+            $('#searchByNameBtn').trigger('click');
+        }
+    })
     
   })	
 </script>

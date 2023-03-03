@@ -162,8 +162,8 @@ html,body {
   			<li class="nav-item dropdown" >
             <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">  Sắp xếp theo  </a>
               <ul class="dropdown-menu fade-up">
-                  <li><a class="dropdown-item"  th:href="@{'/user/searchByBrand/desc/' + ${brandItem}}"> Giá từ cao đến thấp</a></li>
-                  <li><a class="dropdown-item" th:href="@{'/user/searchByBrand/asc/' + ${brandItem}}"> Giá từ thấp đến cao</a></li>
+                  <li><a class="dropdown-item"  th:href="@{'/user/searchBySeries/desc/' + ${seriesItem}}"> Giá từ cao đến thấp</a></li>
+                  <li><a class="dropdown-item" th:href="@{'/user/searchBySeries/asc/' + ${seriesItem}}"> Giá từ thấp đến cao</a></li>
               </ul>
           </li>
   		</ul>
@@ -172,14 +172,14 @@ html,body {
   
 
   <!-- display phones -->
-  <div class="mt-1 d-flex justify-content-center " th:each="item : ${telephones}">
+  <div class="mt-1 d-flex justify-content-center " >
       <div class="row container-fluid d-flex justify-content-around" style="width: 1150px;" id="phoneWrap">
-        <div class="col-3 mt-3 phoneItem" style="background-color:#c8d0cf;border:2px solid #c8d0cf;" th:each="edi : ${item.editions}" >
+        <div class="col-3 mt-3 phoneItem" style="background-color:#c8d0cf;border:2px solid #c8d0cf;margin-left:5px;" th:each="edi : ${editionList}" >
           <div class=" d-flex justify-content-center">
-            <img id="phonePicture" th:src="@{${'/uploads/' + item.pictureUrl}}" th:attr="onclick=|phoneDetail('*{edi.id}')|"  width="250" height="250" style="border-radius: 10px; margin-top: 15px;">
+            <img id="phonePicture" th:src="@{${'/uploads/' + edi.telephone.pictureUrl}}" th:attr="onclick=|phoneDetail('*{edi.id}')|"  width="250" height="250" style="border-radius: 10px; margin-top: 15px;">
           </div>
           <div class="row d-flex justify-content-center ">
-            <span class="col-12 text-center"  style="font-weight:bold; font-size: 18px;">[[*{item.name}]]  [[*{edi.capacity}]]GB</span>
+            <span class="col-12 text-center"  style="font-weight:bold; font-size: 18px;">[[*{edi.telephone.name}]]  [[*{edi.capacity}]]GB</span>
           </div>
           <div id="" class="row d-flex justify-content-center" style="width: 250px; margin-left: 11px;">
               <span class="col-12 text-center"   style="font-weight:bold; font-size: 14px; color:#cb1c22"> <del>  [[${#numbers.formatDecimal(edi.price, 0, 'COMMA', 0, 'POINT')}]] VND</del></span>  
@@ -188,12 +188,13 @@ html,body {
               <span class="col-12 text-center"   style="font-weight:bold; font-size: 22px; color:#cb1c22">[[${#numbers.formatDecimal(edi.price -edi.discount, 0, 'COMMA', 0, 'POINT')}]] VND</span>  
           </div>
           <div id="ip14promax" class="row d-flex justify-content-left mt-2 mb-1" style="width: 250px; height: 35px ; margin-left: 0px;">
-              <button th:if="*{edi.storage > 0}" class="col-4 btn btn-danger" type="button" th:attr="onclick=|phoneDetail('*{edi.id}')|" style="padding: 0px;width: 120px;"> BUY NOW </button>  
-              <button th:unless="*{edi.storage > 0}" class="col-4 btn btn-secondary" type="button" th:attr="onclick=|phoneDetail('*{edi.id}')|" style="padding: 0px;width: 120px;"> SOLD OUT </button>  
+          	  <button th:if="*{edi.storage > 0}" class="col-4 btn btn-danger" type="button" th:attr="onclick=|phoneDetail('*{edi.id}')|" style="padding: 0px;width: 120px;"> BUY NOW </button>  
+              <button th:unless="*{edi.storage > 0}" class="col-4 btn btn-secondary" type="button" th:attr="onclick=|phoneDetail('*{edi.id}')|" style="padding: 0px;width: 120px;"> SOLD OUT </button>
               <button class="col-4 btn btn-secondary" type="button" th:attr="onclick=|phoneDetail('*{edi.id}')|" style="width: 120px;margin-left:5px"> DETAIL </button>  
           </div>
 
         </div>
+        
         </div>
 	      <div class="heightCut" style="height:5px">
 	  	</div>
@@ -204,22 +205,22 @@ html,body {
   </div>
   
   <!-- Modal -->
-		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">Notification</h5>
-		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		      </div>
-		      <div class="modal-body">
-		      	<span style="color:red;">You need to log in first! <i class="fa fa-smile-o" aria-hidden="true" style="font-size: 18px;color:red;"></i></span>
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Notification</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	      	<span style="color:red;">You need to log in first! <i class="fa fa-smile-o" aria-hidden="true" style="font-size: 18px;color:red;"></i></span>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
 </div>
 

@@ -28,12 +28,16 @@
 	  <div class="form-group row">
 	    <label for="masp" class="col-2 col-form-label">Product ID:</label>
 	    <div class="col-3">
-	      <input th:if="${telephone.masp != null}" readonly type="text" th:field="*{masp}" class="form-control" />
+	      <input th:if="${telephone.masp != null and newPhone != 'new'}" readonly type="text" th:field="*{masp}" class="form-control" />
+	      <input th:if="${telephone.masp != null and newPhone == 'new'}"  type="text" th:field="*{masp}" class="form-control" required/>
 	      <input th:if="${telephone.masp == null}"  type="text" th:field="*{masp}" class="form-control" required/>
 	      <input type="hidden" th:field="*{createdAt}" class="form-control"/>
 	      <input type="hidden" th:field="*{createdBy}" class="form-control"/>
 		  <p style="color:red;" th:if="${#fields.hasErrors('masp')}" th:errors="*{masp}" th:class="error" ></p>
 	    </div>
+	    <div th:if="${errorMessage != null}" class="mt-2" style="margin-left:190px;">
+			<span th:text="${errorMessage}" style="color:white;"></span>
+		</div>
 	  </div>
 	  <div class="form-group row">
 	    <label for="name" class="col-2 col-form-label">Name :</label>
@@ -46,9 +50,9 @@
 	    <label  for="pictureUrl" class="col-2 col-form-label">Picture Url :</label>
 	    <div class="col-3" id="picture">
 	      <input th:if="${telephone.masp == null}" type="file" class="form-control"  name="pictureUrl" required/>
-	      <input th:if="${telephone.masp != null}" type="text" class="form-control" id="staticUrl"  name="pictureUrl" th:field="*{pictureUrl}" readonly/>
-	      <input style="width :20%" th:if="${telephone.masp != null}" type="button" class="form-control" id="editPicture" value="Edit" />
-		  <p style="color:red;" th:if="${#fields.hasErrors('pictureUrl')}" th:errors="*{pictureUrl}" th:class="error" ></p>
+	      <input th:if="${telephone.masp != null and newPhone != 'new'}" type="text" class="form-control" id="staticUrl"  name="pictureUrl" th:field="*{pictureUrl}" readonly/>
+	      <input th:if="${telephone.masp != null and newPhone == 'new'}" type="file" class="form-control"  name="pictureUrl" required/>
+	      <input style="width :20%" th:if="${telephone.masp != null and newPhone != 'new'}" type="button" class="form-control" id="editPicture" value="Edit" />
 	    </div>
 	  </div>
 	  <div class="form-group row">
@@ -70,6 +74,7 @@
 	    <div class="col-3">
 	      <input type="text" class="form-control"  name="brand" th:field="*{brand.brand}" required/>
 	      <input type="hidden" class="form-control"  name="id" th:field="*{brand.id}"/>
+	      <input type="hidden" class="form-control"  name="newOrUpdate" th:value="${newOrUpdate}"/>
 	    </div>
 	  </div>
 	  
@@ -77,20 +82,20 @@
 	  <div class="form-row" style="margin-left:183px" th:each="item, itemStat : *{editions}">
 		  <div class="form-group col-2">
 		      <label for="capacity">Capacity (GB)</label>
-		      <input type="text" readonly class="form-control" th:field="*{editions[__${itemStat.index}__].capacity}"   name="capacity" required>
+		      <input type="number" readonly class="form-control" th:field="*{editions[__${itemStat.index}__].capacity}"   name="capacity" required>
 		      <input type="hidden" class="form-control" th:field="*{editions[__${itemStat.index}__].id}"   name="id" >
 		    </div>
 		    <div class="form-group col-2">
 		      <label for="price">Price</label>
-		      <input type="text" class="form-control" th:field="*{editions[__${itemStat.index}__].price}"  name="price" required>
+		      <input type="number" class="form-control" th:field="*{editions[__${itemStat.index}__].price}"  name="price" required>
 		    </div>
 		    <div class="form-group col-2">
 		      <label for="discount">Discount</label>
-		      <input type="text" class="form-control" th:field="*{editions[__${itemStat.index}__].discount}" name="discount" required>
+		      <input type="number" class="form-control" th:field="*{editions[__${itemStat.index}__].discount}" name="discount" required>
 		    </div>
 		    <div class="form-group col-2">
 		      <label for="storage">Storage</label>
-		      <input type="text" class="form-control" th:field="*{editions[__${itemStat.index}__].storage}" name="storage" >
+		      <input type="number" class="form-control" th:field="*{editions[__${itemStat.index}__].storage}" name="storage" >
 		    </div>
 <!-- 		    <div class="form-group col-2"> -->
 <!-- 		      <label for="storage">Saled</label> -->
@@ -109,10 +114,13 @@
 
 <script>
 $( document ).ready(function() {
+	var editClick = 0;
     $("#editPicture").on('click', function(){
-    	$("#staticUrl").remove();
-    	$("#picture").prepend('<input type="file" class="form-control"  name="pictureUrl"/>');
-    	
+    	if(editClick <1){
+        	$("#staticUrl").remove();
+        	$("#picture").prepend('<input type="file" class="form-control"  name="pictureUrl"/>');
+    	}
+    	editClick++;
     });
 });
 </script>

@@ -34,7 +34,10 @@
 						</div>
 						<input type="text" class="form-control" placeholder="userName" th:field="*{userName}" required>
 					</div>
-					<div th:if="${#fields.hasErrors('userName')}" class="text-white mb-2">UserName is invalid </div>
+					<div th:if="${#fields.hasErrors('userName')}" class="text-white">UserName is invalid </div>
+					<div th:if="${errorMessage != null}" class="mb-2">
+						<span th:text="${errorMessage}" style="color:white;"></span>
+					</div>
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-key"></i></span>

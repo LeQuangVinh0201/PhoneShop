@@ -79,7 +79,7 @@ public class AdminManage {
 	public String addNewOrEdit(Model model, @PathVariable(name="masp", required = false) Optional<String> masp) {
 		Telephone telephone;
 		
-		if(masp.isPresent()) {
+		if(masp.isPresent()) {//update
 			Optional<Telephone> existedPhone = telephoneService.findById(masp.get());
 			
 			if(existedPhone.isPresent()) {
@@ -87,6 +87,7 @@ public class AdminManage {
 			}else {
 				telephone = new Telephone();
 			}
+			model.addAttribute("newOrUpdate", "update");
 			
 		}else {//create new
 			telephone = new Telephone();
@@ -106,6 +107,7 @@ public class AdminManage {
 				}
 		    }
 			telephone.setEditions(newList2);
+			model.addAttribute("newOrUpdate", "new");
 		}
 
 		model.addAttribute("telephone", telephone);
@@ -114,12 +116,20 @@ public class AdminManage {
 	
 	@PostMapping("/manage/products/newOrEdit")
 	public String saveOrUpdate(ModelMap model,@Valid Telephone telephone,BindingResult result, HttpServletRequest request,
-			@RequestParam(name="pictureUrl", required = false) MultipartFile photo ) {
+			@RequestParam(name="pictureUrl", required = false) MultipartFile photo,@RequestParam String newOrUpdate) {
 		
 		String username = (String) session.getAttribute("username");
 		Optional<Telephone> existOrNot = telephoneService.findById(telephone.getMasp());
 		
 		if( existOrNot.isPresent()) { //update
+			if(newOrUpdate.equalsIgnoreCase("new")) {
+				model.addAttribute("newPhone", "new");
+				model.addAttribute("errorMessage", "This Product ID has already existed!");
+				model.addAttribute("telephone", telephone);
+				model.addAttribute("newOrUpdate", "new");
+		        return "NewOrEdit";
+			}
+			
 			if(telephone.getPictureUrl() == null) {
 				Path path = Paths.get("uploads/");
 				
@@ -148,6 +158,7 @@ public class AdminManage {
 			Date nowDate = new Date();
 			telephone.setUpdatedAt(nowDate.toString());
 			telephone.setUpdatedBy(username);
+			
 		}else { //create new
 			Path path = Paths.get("uploads/");
 			

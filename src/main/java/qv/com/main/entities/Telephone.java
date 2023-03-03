@@ -39,33 +39,33 @@ public class Telephone {
 	@Column(columnDefinition = "nvarchar(50)")
 	private String masp;
 	
-	@Column(columnDefinition = "nvarchar(50) not null")
+	@Column(columnDefinition = "nvarchar(250) not null")
 	@NotEmpty(message = "Name must be entered")
-	@Length(max = 50, min =1 , message = "Length is between 1 and 50")
+	@Length(max = 250, min =1 , message = "Length is between 1 and 250")
 	private String name;
 	
-	@Column(columnDefinition = "nvarchar(50) not null")
+	@Column(columnDefinition = "nvarchar(250) not null")
 	@NotEmpty(message = "pictureUrl must be entered")
-	@Length(max = 50, min =1 , message = "Length is between 1 and 50")
+	@Length(max = 250, min =1 , message = "Length is between 1 and 250")
 	private String pictureUrl;
 	
-	@Column(columnDefinition = "nvarchar(50) not null")
+	@Column(columnDefinition = "nvarchar(250) not null")
 	@NotEmpty(message = "series must be entered")
-	@Length(max = 50, min =1 , message = "Length is between 1 and 50")
+	@Length(max = 250, min =1 , message = "Length is between 1 and 250")
 	private String series;
 	
-	@Column(columnDefinition = "nvarchar(50)")
-	@Length(max = 50, min =1 , message = "Length is between 1 and 50")
+	@Column(columnDefinition = "nvarchar(250)")
+	@Length(max = 250, min =1 , message = "Length is between 1 and 250")
 	private String createdBy;
 	
-	@Column(columnDefinition = "nvarchar(50)")
+	@Column(columnDefinition = "nvarchar(250)")
 	private String createdAt;
 	
-	@Column(columnDefinition = "nvarchar(50)")
-	@Length(max = 50, min =1 , message = "Length is between 1 and 50")
+	@Column(columnDefinition = "nvarchar(250)")
+	@Length(max = 250, min =1 , message = "Length is between 1 and 250")
 	private String updatedBy;
 	
-	@Column(columnDefinition = "nvarchar(50)")
+	@Column(columnDefinition = "nvarchar(250)")
 	private String updatedAt;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy ="telephone", cascade =CascadeType.ALL)

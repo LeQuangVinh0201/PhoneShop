@@ -294,6 +294,12 @@ ul {
     	window.location.href = "/user/findByName/" + $("#nameSearch").val();
     });
 	
+	$(document).on('keypress',function(e) {
+        if(e.which == 13) {
+            $('#searchByNameBtn').trigger('click');
+        }
+    })
+	
 	$('#personAccount').click(function(){
     	window.location.href = "/alogin";
     });
