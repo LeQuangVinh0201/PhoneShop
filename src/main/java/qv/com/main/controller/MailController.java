@@ -9,10 +9,12 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.servlet.http.HttpSession;
 import qv.com.main.entities.Edition;
@@ -56,9 +58,9 @@ public class MailController {
 	HttpSession session;
 	
 	@PostMapping("/mail/complete")
-	public String complete(@RequestParam String phoneNumber,@RequestParam String fullName
+	public ModelAndView complete(@RequestParam String phoneNumber,@RequestParam String fullName
 			,@RequestParam String email, @RequestParam String phoneNameList , @RequestParam String oriPriceForm
-			,@RequestParam String saleForm, @RequestParam String finalPriceForm,Model model) {
+			,@RequestParam String saleForm, @RequestParam String finalPriceForm, @RequestParam String address,ModelMap model) {
 		
 		// Create a Simple MailMessage.
         SimpleMailMessage message = new SimpleMailMessage();
@@ -67,6 +69,8 @@ public class MailController {
         contentText += " Chi tiết đặt hàng như sau: " + "\n";
         contentText += phoneNameList + "\n";
         contentText += oriPriceForm + "\n" +  saleForm + "\n" + finalPriceForm + "\n" + "\n";
+        contentText += "Địa chỉ giao hàng : " + address + "\n";
+        contentText += "Hình thức thanh toán : " + "Thanh toán tại lúc nhận hàng" + "\n" + "\n";
         contentText += "Cảm ơn quý khách đã mua hàng tại QV Store!";
         
         
@@ -109,8 +113,9 @@ public class MailController {
 		userService.saveNoUpdatePass(user);
 
         // Send Message!
-//        emailSender.send(message); 
+        emailSender.send(message); 
 		
-        return "redirect:/loginSuccess";
+        model.addAttribute("statusSuccess", "Quý Khách đã hoàn tất đơn hàng, vui lòng kiểm tra email xác nhận!");
+		return new ModelAndView("forward:/loginSuccess", model);
 	}
 }

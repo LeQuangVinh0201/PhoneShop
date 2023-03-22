@@ -16,7 +16,7 @@
   <div id="header" class="container-fluid text-white">
     <div class="row" style="padding: 0;">
         <div class="col-2" style="padding:5px">
-          <img src="/LogoImage/logo.png"  width="100" height="70" >
+          <img src="/LogoImage/logo.png" id="qvLogo" width="100" height="70" >
         </div>
         <div class="col-7 d-flex justify-content-center">
           <input type="text" id ="nameSearch" placeholder=" Please enter product's name to search" style="width: 70%; height: 50%;margin-top: 20px; border-radius: 10px;">
@@ -215,6 +215,14 @@
     
     $('#personAccount').click(function(){
     	window.location.href = "/alogin";
+    });
+    
+    $('#qvLogo').click(function(){
+    	if($('#userName').length > 0 ){
+    		window.location.href = "/loginSuccess";
+		}else{
+	    	window.location.href = "/";
+		}
     });
     
     $('#cart').click(function(e){

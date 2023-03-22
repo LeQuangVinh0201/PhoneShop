@@ -16,7 +16,7 @@
   <div id="header" class="container-fluid text-white">
     <div class="row" style="padding: 0;">
         <div class="col-2" style="padding:5px">
-          <img src="/LogoImage/logo.png"  width="100" height="70" style="cursor: pointer; ">
+          <img src="/LogoImage/logo.png" id="qvLogo"  width="100" height="70" style="cursor: pointer; ">
         </div>
         <div class="col-6 d-flex justify-content-center pl-4">
           <input type="text" id="nameSearch" placeholder=" Please enter product's name to search" style="width: 80%; height: 50%;margin-top: 20px; margin-left:90px; border-radius: 10px;">
@@ -185,6 +185,25 @@
   	  </div>
   </div>
   
+  <!-- Modal -->
+  <div th:if="${statusSuccess != null}">
+	<div class="modal fade show" id="successPopup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: block;">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Notification</h5>
+	        <button type="button" class="btn-close" id="close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	      	<span style="color:red;">[[${statusSuccess}]] <i class="fa fa-smile-o" aria-hidden="true" style="font-size: 18px;color:red;"></i></span>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" id="closebtn" data-bs-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+  </div>
 
 </div>
 
@@ -195,6 +214,10 @@
 	window.location.href = "/user/phoneDetail/" +editionId;
   }
   $(document).ready(function () {
+    $('#close, #closebtn').click(function(){
+    	$('#successPopup').css('display','none');
+    });  
+	  
     $('#cart').click(function(){
     	window.location.href = "/cart/orders";
     });
@@ -205,6 +228,14 @@
     
     $('#searchByNameBtn').click(function(){
     	window.location.href = "/user/findByName/" + $("#nameSearch").val();
+    });
+    
+    $('#qvLogo').click(function(){
+    	if($('#userName').length > 0 ){
+    		window.location.href = "/loginSuccess";
+		}else{
+	    	window.location.href = "/";
+		}
     });
     
     $(document).on('keypress',function(e) {
